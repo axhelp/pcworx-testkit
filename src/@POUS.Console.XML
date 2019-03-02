@@ -1,0 +1,99 @@
+<project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 245" creationDateTime="2019-03-02T20:06:51" contentDescription="###XMLINFO=1;1;"/>
+	<contentHeader name="example-modbus-rtu" version="1551546411" modificationDateTime="2019-03-02T20:06:51" connectionCheck="true">
+		<coordinateInfo>
+			<pageSize x="999" y="9999"/>
+			<fbd>
+				<scaling x="2" y="2"/>
+			</fbd>
+			<ld>
+				<scaling x="2" y="2"/>
+			</ld>
+			<sfc>
+				<scaling x="2" y="2"/>
+			</sfc>
+		</coordinateInfo>
+	</contentHeader>
+	<types>
+		<dataTypes/>
+		<pous>
+			<pou name="Console" pouType="functionBlock" pouGroup="Mock" lastChange="2019-03-02T14:08:56">
+				<interface>
+					<externalVars retain="false">
+						<variable name="PLC_SYS_TICK_CNT" group="Default">
+							<type>
+								<DINT/>
+							</type>
+							<documentation>
+								<html xmlns="http://www.w3.org/1999/xhtml">
+									<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">Number of system ticks</p>
+								</html>
+							</documentation>
+						</variable>
+					</externalVars>
+					<localVars retain="false">
+						<variable name="strDelimeter" group="Default">
+							<type>
+								<string length="80"/>
+							</type>
+						</variable>
+					</localVars>
+					<inputVars retain="false">
+						<variable name="strSource" group="Default">
+							<type>
+								<string length="80"/>
+							</type>
+						</variable>
+						<variable name="strMessage" group="Default">
+							<type>
+								<string length="80"/>
+							</type>
+						</variable>
+					</inputVars>
+					<externalVars retain="false">
+						<variable name="udtConsole" group="Default">
+							<type>
+								<derived name="udtConsole"/>
+							</type>
+						</variable>
+					</externalVars>
+					<localVars retain="false">
+						<variable name="strConsole" group="Default">
+							<type>
+								<string length="80"/>
+							</type>
+						</variable>
+						<variable name="iConsoleCounter" group="Default">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+					</localVars>
+				</interface>
+				<body>
+					<ST>
+						<worksheet name="Console">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">strDelimeter						:= ';';<br/>
+									<br/>strConsole							:= DINT_TO_STRING(PLC_SYS_TICK_CNT, '%d');<br/>strConsole							:= CONCAT(strConsole, strDelimeter);<br/>
+									<br/>strConsole							:= CONCAT(strConsole, strSource);<br/>strConsole							:= CONCAT(strConsole, strDelimeter);<br/>
+									<br/>strConsole							:= CONCAT(strConsole, strMessage);<br/>
+									<br/>IF udtConsole.iCounter &gt;= 1000 <br/>THEN<br/>	iConsoleCounter					:= 0;<br/>ELSE<br/>	iConsoleCounter					:= udtConsole.iCounter + 1;<br/>END_IF;<br/>
+									<br/>udtConsole.arrData[iConsoleCounter] := strConsole;<br/>udtConsole.iCounter					:= iConsoleCounter;<br/>
+								</p>
+							</html>
+						</worksheet>
+					</ST>
+				</body>
+				<documentation>
+					<html xmlns="http://www.w3.org/1999/xhtml">
+						<div xml:space="preserve" id="MWTDESCRIPTION" wsName="ConsoleT" xmlns="http://www.w3.org/1999/xhtml"/>
+					</html>
+				</documentation>
+			</pou>
+		</pous>
+	</types>
+	<instances>
+		<configurations/>
+	</instances>
+</project>

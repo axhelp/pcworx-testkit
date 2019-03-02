@@ -1,0 +1,35 @@
+<project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 245" creationDateTime="2019-03-02T20:06:51" contentDescription="###XMLINFO=1;1;"/>
+	<contentHeader name="example-modbus-rtu" version="1551546411" modificationDateTime="2019-03-02T20:06:51" connectionCheck="true">
+		<coordinateInfo>
+			<pageSize x="999" y="9999"/>
+			<fbd>
+				<scaling x="2" y="2"/>
+			</fbd>
+			<ld>
+				<scaling x="2" y="2"/>
+			</ld>
+			<sfc>
+				<scaling x="2" y="2"/>
+			</sfc>
+		</coordinateInfo>
+	</contentHeader>
+	<types>
+		<dataTypes>
+			<datatypeWorksheet>
+				<html xmlns="http://www.w3.org/1999/xhtml">
+					<div xml:space="preserve" id="MWTDESCRIPTION" wsName="IL_RS_UNI" xmlns="http://www.w3.org/1999/xhtml">TYPE<br/>
+						<br/>	ARR_B_0_13 : ARRAY [0..13] OF BYTE;<br/>
+						<br/>	udtRS485Frame	:<br/>	STRUCT<br/>		iCounter	:	INT;<br/>		iWordsNo	:	INT;<br/>		arrData		:	ARR_B_0_13;<br/>	END_STRUCT;<br/>
+						<br/>	udtBufferReceive :<br/>	STRUCT<br/>		iWordsNo 	: INT;<br/>		arrData		: ARR_B_0_13;<br/>	END_STRUCT;<br/>
+						<br/>	udtBufferSend :<br/>	STRUCT<br/>		iWordsNo 	: INT;<br/>		arrData		: ARR_B_0_13;<br/>	END_STRUCT;<br/>END_TYPE<br/>
+					</div>
+				</html>
+			</datatypeWorksheet>
+		</dataTypes>
+		<pous/>
+	</types>
+	<instances>
+		<configurations/>
+	</instances>
+</project>

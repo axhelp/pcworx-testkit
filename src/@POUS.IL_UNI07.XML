@@ -1,0 +1,249 @@
+<project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 245" creationDateTime="2019-03-02T20:06:51" contentDescription="###XMLINFO=1;1;"/>
+	<contentHeader name="example-modbus-rtu" version="1551546920" modificationDateTime="2019-03-02T20:15:20" connectionCheck="true">
+		<coordinateInfo>
+			<pageSize x="999" y="9999"/>
+			<fbd>
+				<scaling x="2" y="2"/>
+			</fbd>
+			<ld>
+				<scaling x="2" y="2"/>
+			</ld>
+			<sfc>
+				<scaling x="2" y="2"/>
+			</sfc>
+		</coordinateInfo>
+	</contentHeader>
+	<types>
+		<dataTypes/>
+		<pous>
+			<pou name="IL_UNI07" pouType="functionBlock" pouGroup="Mock" lastChange="2019-03-02T20:15:20">
+				<interface>
+					<inputVars retain="false">
+						<variable name="xConsoleLog" group="Inputs">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="strConsoleId" group="Inputs">
+							<type>
+								<string length="80"/>
+							</type>
+						</variable>
+					</inputVars>
+					<inOutVars retain="false">
+						<variable name="udtRS485Line" group="Inouts">
+							<type>
+								<derived name="udtRS485Frame"/>
+							</type>
+						</variable>
+						<variable name="arrInputAddress" group="Inouts">
+							<type>
+								<derived name="MB2_RSUNI_ARR_B_1_14"/>
+							</type>
+							<documentation>
+								<html xmlns="http://www.w3.org/1999/xhtml">
+									<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">Process Data Input</p>
+								</html>
+							</documentation>
+						</variable>
+						<variable name="arrOutputAddress" group="Inouts">
+							<type>
+								<derived name="MB2_RSUNI_ARR_B_1_14"/>
+							</type>
+							<documentation>
+								<html xmlns="http://www.w3.org/1999/xhtml">
+									<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">Process Data Output</p>
+								</html>
+							</documentation>
+						</variable>
+					</inOutVars>
+					<localVars retain="false">
+						<variable name="R_TRIG_xSending" group="FB">
+							<type>
+								<derived name="R_TRIG"/>
+							</type>
+						</variable>
+						<variable name="Console" group="FB">
+							<type>
+								<derived name="Console"/>
+							</type>
+						</variable>
+						<variable name="udtBufferReceive" group="Internal">
+							<type>
+								<derived name="udtBufferReceive"/>
+							</type>
+						</variable>
+						<variable name="udtBufferSend" group="Internal">
+							<type>
+								<derived name="udtBufferSend"/>
+							</type>
+						</variable>
+						<variable name="xSending" group="Internal">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="iByteNum" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="iBytesToCopy" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="bStatusBits" group="Internal">
+							<type>
+								<BYTE/>
+							</type>
+						</variable>
+						<variable name="wNumberOfCharactersReceived" group="Internal">
+							<type>
+								<WORD/>
+							</type>
+						</variable>
+						<variable name="iFirstAddressIndex" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="iLastAddressIndex" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="iAddressIndex" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="iFirstBufferIndex" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="iByteToCopy" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="iWordsTransmitted" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="iWordsReceived" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="wWordsReceived" group="Internal">
+							<type>
+								<WORD/>
+							</type>
+						</variable>
+						<variable name="wWordsTransmitted" group="Internal">
+							<type>
+								<WORD/>
+							</type>
+						</variable>
+						<variable name="udtRS485Line_iCounterPrev" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="iWordsToSend" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+					</localVars>
+				</interface>
+				<body>
+					<ST>
+						<worksheet name="IL_UNI07">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">(* =================================== Обнуление данных ==================================================== *)<br/>FOR iByteToCopy	:= 1 TO 14 DO<br/>
+									<br/>	arrOutputAddress[iByteToCopy] := BYTE#16#00;<br/>
+									<br/>END_FOR;<br/>(* ============================================================================================================== *)<br/>
+									<br/>
+									<br/>(* =================================== Формирование битов статуса модуля ======================================= *)<br/>bStatusBits.X0 := udtBufferReceive.iWordsNo &gt; 0; 	(* Receive buffer not empty *)<br/>bStatusBits.X1 := FALSE; 							(* Receive error *)<br/>bStatusBits.X2 := FALSE; 							(* Transmit error *)<br/>bStatusBits.X3 := FALSE; 							(* DCD *)<br/>bStatusBits.X4 := FALSE; 							(* Receive buffer full *)<br/>bStatusBits.X5 := FALSE; 							(* Transmit buffer full*)<br/>bStatusBits.X6 := udtBufferSend.iWordsNo &gt; 0; 		(* Transmit buffer not empty *)<br/>bStatusBits.X7 := FALSE;							(* DSR *)<br/>
+									<br/>(* ============================================================================================================== *)<br/>
+									<br/>
+									<br/>(* ====================================== Исполнение команд ======================================================*)<br/>
+									<br/>(* "Read number of characters received" command *)<br/>IF arrInputAddress[1] = BYTE#16#00 THEN<br/>
+									<br/>	IF xConsoleLog THEN<br/>		Console.strSource				:= strConsoleId;<br/>		Console.strMessage				:= CONCAT('ReadNumberOfChar command, number ', INT_TO_STRING(udtBufferReceive.iWordsNo, '%d'));<br/>		Console();<br/>	END_IF;<br/>
+									<br/>	arrOutputAddress[1] 			:= arrInputAddress[1];						(* Command mirror *)<br/>	arrOutputAddress[2] 			:= bStatusBits;								(* Status bits *)<br/>
+									<br/>	wNumberOfCharactersReceived 	:= INT_TO_WORD(udtBufferReceive.iWordsNo);<br/>	arrOutputAddress[3] 			:= wNumberOfCharactersReceived.B0;<br/>	arrOutputAddress[4] 			:= wNumberOfCharactersReceived.B1;<br/>
+									<br/>
+									<br/>(* “Transmit characters” command *)<br/>ELSIF arrInputAddress[1] = BYTE#16#10 <br/>	OR arrInputAddress[1] = BYTE#16#50  <br/>	AND NOT xSending <br/>	THEN<br/>
+									<br/>		IF xConsoleLog THEN<br/>			Console.strSource			:= strConsoleId;<br/>			Console.strMessage			:= 'TransmitChar command';<br/>			Console();<br/>		END_IF;<br/>
+									<br/>		iWordsToSend				:= BYTE_TO_INT(arrInputAddress[3]);<br/>		iBytesToCopy				:= iWordsToSend * 2;<br/>
+									<br/>		arrOutputAddress[1] 		:= arrInputAddress[1];						(* Command mirror *)<br/>		arrOutputAddress[2] 		:= bStatusBits;								(* Status bits *)<br/>
+									<br/>		iFirstAddressIndex			:= 4;<br/>		iLastAddressIndex			:= MIN(iBytesToCopy - 1, 14);<br/>		iFirstBufferIndex			:= 0;<br/>
+									<br/>		FOR iAddressIndex := iFirstAddressIndex TO iLastAddressIndex DO<br/>			udtBufferSend.arrData[iFirstBufferIndex] 	:= arrInputAddress[iAddressIndex];<br/>			iFirstBufferIndex 							:= iFirstBufferIndex + 1;<br/>		END_FOR;<br/>
+									<br/>		udtBufferSend.iWordsNo		:= iWordsToSend;<br/>
+									<br/>		xSending					:= TRUE;<br/>
+									<br/>
+									<br/>(* "Read characters" command *)<br/>ELSIF arrInputAddress[1] = BYTE#16#30 THEN<br/>
+									<br/>	IF xConsoleLog THEN<br/>		Console.strSource			:= strConsoleId;<br/>		Console.strMessage			:= CONCAT('ReadChar command, length ', INT_TO_STRING(udtBufferReceive.iWordsNo, '%d'));<br/>		Console();<br/>	END_IF;<br/>
+									<br/>	arrOutputAddress[1] 		:= arrInputAddress[1];						(* Command mirror *)<br/>	bStatusBits.X0 				:= FALSE;<br/>	arrOutputAddress[2] 		:= bStatusBits;								(* Status bits *)<br/>
+									<br/>	arrOutputAddress[3] 		:= INT_TO_BYTE(udtBufferReceive.iWordsNo);	(* Number of valid characters available in the input data *)<br/>
+									<br/>	iBytesToCopy 				:= udtBufferReceive.iWordsNo * 2;<br/>
+									<br/>	iFirstAddressIndex			:= 4;<br/>	iLastAddressIndex			:= MIN(iFirstAddressIndex + iBytesToCopy - 1, 14);<br/>	iFirstBufferIndex			:= 0;<br/>	FOR iAddressIndex := iFirstAddressIndex TO iLastAddressIndex DO<br/>		arrOutputAddress[iAddressIndex] := udtBufferReceive.arrData[iFirstBufferIndex];<br/>		iFirstBufferIndex 				:= iFirstBufferIndex + 1;<br/>	END_FOR;<br/>
+									<br/>	udtBufferReceive.iWordsNo	:= 0;<br/>
+									<br/>
+									<br/>(* "Read counters" command *)<br/>ELSIF arrInputAddress[1] = BYTE#16#3E <br/>	AND arrInputAddress[2] = BYTE#16#00 THEN<br/>
+									<br/>		IF xConsoleLog THEN<br/>			Console.strSource			:= strConsoleId;<br/>			Console.strMessage			:= 'ReadCounters command';<br/>			Console();<br/>		END_IF;<br/>
+									<br/>		arrOutputAddress[1] 		:= arrInputAddress[1];						(* Command mirror *)<br/>		arrOutputAddress[2] 		:= bStatusBits;								(* Status bits *)<br/>
+									<br/>		wWordsReceived				:= INT_TO_WORD(iWordsReceived);<br/>		arrOutputAddress[3]			:= wWordsReceived.B0;<br/>		arrOutputAddress[4]			:= wWordsReceived.B1;<br/>
+									<br/>		wWordsTransmitted			:= INT_TO_WORD(iWordsTransmitted);<br/>		arrOutputAddress[7]			:= wWordsTransmitted.B0;<br/>		arrOutputAddress[8]			:= wWordsTransmitted.B1;<br/>
+									<br/>(* "Write configuration" command *)<br/>ELSIF arrInputAddress[1] = BYTE#16#40 THEN<br/>
+									<br/>	IF xConsoleLog THEN<br/>		Console.strSource			:= strConsoleId;<br/>		Console.strMessage			:= 'Write configuration command';<br/>		Console();<br/>	END_IF;<br/>
+									<br/>	arrOutputAddress[1] 		:= arrInputAddress[1];						(* Command mirror *)<br/>	arrOutputAddress[2] 		:= bStatusBits;								(* Status bits *)<br/>	<br/>ELSE<br/>
+									<br/>	IF xConsoleLog THEN<br/>		Console.strSource			:= strConsoleId;<br/>		Console.strMessage			:= CONCAT(BYTE_TO_STRING(arrInputAddress[1], '%x'),' command');<br/>		Console();<br/>	END_IF;<br/>
+									<br/>	arrOutputAddress[1] 		:= 	arrInputAddress[1];						(* Command mirror *)<br/>
+									<br/>END_IF;<br/>
+									<br/>(* ============================================================================================================== *)<br/>
+									<br/>
+									<br/>(* ================================= Снятие флага xSending когда комаанда меняется ============================== *)<br/>IF arrInputAddress[1] &lt;&gt; BYTE#16#10  <br/>	AND arrInputAddress[1] &lt;&gt; BYTE#16#50 <br/>	THEN<br/>
+									<br/>		xSending	:= FALSE;<br/>
+									<br/>END_IF;<br/>
+									<br/>R_TRIG_xSending.CLK	:= xSending;<br/>R_TRIG_xSending();<br/>(* ============================================================================================================== *)<br/>
+									<br/>
+									<br/>(* ================================= Отправка данных из внутреннего буфера в интерфейс ========================== *)<br/>IF R_TRIG_xSending.Q <br/>	AND udtBufferSend.iWordsNo &gt; 0 THEN<br/>
+									<br/>		IF xConsoleLog THEN<br/>			Console.strSource			:= strConsoleId;<br/>			Console.strMessage			:= CONCAT('Sending to interface, length ', INT_TO_STRING(udtBufferSend.iWordsNo, '%d'));<br/>			Console();<br/>		END_IF;<br/>
+									<br/>
+									<br/>		iBytesToCopy :=  MIN((udtBufferSend.iWordsNo * 2) - 1, 13);<br/>
+									<br/>		FOR iByteNum := 0 TO iBytesToCopy DO<br/>
+									<br/>			udtRS485Line.arrData[iByteNum] := udtBufferSend.arrData[iByteNum];<br/>
+									<br/>		END_FOR;<br/>
+									<br/>		udtRS485Line.iCounter		:= udtRS485Line.iCounter + 1;<br/>		udtRS485Line.iWordsNo		:= udtBufferSend.iWordsNo;<br/>		udtRS485Line_iCounterPrev 	:= udtRS485Line.iCounter;<br/>
+									<br/>		udtBufferSend.iWordsNo		:= 0;<br/>
+									<br/>(* =================== Пришли новые данные из интерфейса - запись во внутренний буфер ======================= *)<br/>ELSIF udtRS485Line.iCounter &gt; udtRS485Line_iCounterPrev <br/>	AND NOT xSending <br/>	AND udtRS485Line.iWordsNo &gt; 0 THEN<br/>
+									<br/>		IF xConsoleLog THEN<br/>			Console.strSource				:= strConsoleId;<br/>			Console.strMessage				:= CONCAT('Receiving from interface, length ', INT_TO_STRING(udtRS485Line.iWordsNo, '%d'));<br/>			Console();<br/>		END_IF;<br/>
+									<br/>		iBytesToCopy :=  MIN((udtRS485Line.iWordsNo * 2) - 1, 13);<br/>
+									<br/>		FOR iByteNum := 0 TO iBytesToCopy DO<br/>
+									<br/>			udtBufferReceive.arrData[iByteNum] := udtRS485Line.arrData[iByteNum];<br/>
+									<br/>		END_FOR;<br/>
+									<br/>		udtBufferReceive.iWordsNo	:= udtRS485Line.iWordsNo;<br/>		iWordsReceived				:= iWordsReceived + udtRS485Line.iWordsNo;<br/>		udtRS485Line_iCounterPrev 	:= udtRS485Line.iCounter;<br/>
+									<br/>END_IF;<br/>(* ============================================================================================================== *)<br/>
+								</p>
+							</html>
+						</worksheet>
+					</ST>
+				</body>
+				<documentation>
+					<html xmlns="http://www.w3.org/1999/xhtml">
+						<div xml:space="preserve" id="MWTDESCRIPTION" wsName="IL_UNI07T" xmlns="http://www.w3.org/1999/xhtml"/>
+					</html>
+				</documentation>
+			</pou>
+		</pous>
+	</types>
+	<instances>
+		<configurations/>
+	</instances>
+</project>
