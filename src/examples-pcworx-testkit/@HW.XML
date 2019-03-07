@@ -1,6 +1,6 @@
 <project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
-	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 245" creationDateTime="2019-03-02T20:06:52" contentDescription="###XMLINFO=1;1;"/>
-	<contentHeader name="example-modbus-rtu" version="1551546412" modificationDateTime="2019-03-02T20:06:52" connectionCheck="true">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 500" creationDateTime="2019-03-06T17:02:51" contentDescription="###XMLINFO=2;1;"/>
+	<contentHeader name="examples-pcworx-testkit" version="1551943874" modificationDateTime="2019-03-07T10:31:14" connectionCheck="true">
 		<coordinateInfo>
 			<pageSize x="999" y="9999"/>
 			<fbd>
@@ -21,11 +21,13 @@
 	<instances>
 		<configurations>
 			<configuration name="STD_CNF" plcType="eCLR">
-				<resource name="STD_RES" procType="AXC1050_30">
-					<task priority="0" interval="00:00:01.0" name="STD_TSK" watchdogTime="00:00:00.0" stack="MEDIUM" saveFPU="false" noSuspend="false">
-						<pouInstance name="Main:Main" type="program"/>
-					</task>
+				<resource name="STD_RES" procType="AXC1050_30" watchdogTimeDefaultTask="00:00:00.0" stackDefaultTask="MEDIUM" saveFPUDefaultTask="false" noSuspendDefaultTask="false">
 					<globalVars retain="false">
+						<variable name="" group="Default">
+							<type>
+								<INT/>
+							</type>
+						</variable>
 						<variable name="AXIO_DIAG_PARAM_2_REG_HI" address="%MB1.60005" group="System Variables">
 							<type>
 								<BYTE/>
@@ -1012,6 +1014,15 @@
 							</type>
 						</variable>
 					</globalVars>
+					<pouInstance name="IB_IL_RS_UNI:IB_IL_RS_UNI" type="program">
+						<globalVarsPg retain="false">
+							<variable name="" group="Default">
+								<type>
+									<INT/>
+								</type>
+							</variable>
+						</globalVarsPg>
+					</pouInstance>
 				</resource>
 			</configuration>
 		</configurations>

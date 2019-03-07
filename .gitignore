@@ -1,3 +1,6 @@
 bin/example-modbus-rtu/
 *.mwt
 bin/libraries/Modbus_RTU_1/
+bin/examples/examples-pcworx-testkit/
+bin/libraries/pcworx_testkit_1/
+bin/pcworx-testkit/
