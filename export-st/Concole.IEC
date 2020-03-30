@@ -1,0 +1,14 @@
+(*@PROPERTIES_EX@
+TYPE: DATA_TYPE
+LOCALE: 0
+*)
+TYPE
+	ARR_STR_0_1000 : ARRAY [0 ..1000] OF STRING;
+
+	udtConsole	:
+	STRUCT
+		iCounter: INT;
+		arrData: ARR_STR_0_1000;
+	END_STRUCT;
+END_TYPE
+

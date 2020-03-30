@@ -1,0 +1,28 @@
+(*@PROPERTIES_EX@
+TYPE: DATA_TYPE
+LOCALE: 0
+*)
+TYPE
+
+	ARR_B_0_13 : ARRAY [0..13] OF BYTE;
+
+	udtRS485Frame	:
+	STRUCT
+		iCounter	:	INT;
+		iWordsNo	:	INT;
+		arrData		:	ARR_B_0_13;
+	END_STRUCT;
+
+	udtBufferReceive :
+	STRUCT
+		iWordsNo 	: INT;
+		arrData		: ARR_B_0_13;
+	END_STRUCT;
+
+	udtBufferSend :
+	STRUCT
+		iWordsNo 	: INT;
+		arrData		: ARR_B_0_13;
+	END_STRUCT;
+END_TYPE
+
