@@ -4,3 +4,5 @@ bin/libraries/Modbus_RTU_1/
 bin/examples/examples-pcworx-testkit/
 bin/libraries/pcworx_testkit_1/
 bin/pcworx-testkit/
+bin/libraries/Modbus_RTU_3/Modbus_RTU_3/
+bin/pcworx-testkit_2/

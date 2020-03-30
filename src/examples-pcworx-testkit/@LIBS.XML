@@ -1,6 +1,6 @@
 <project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
-	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 500" creationDateTime="2019-03-02T20:06:51" contentDescription="###XMLINFO=2;1;"/>
-	<contentHeader name="examples-pcworx-testkit" version="1551943873" modificationDateTime="2019-03-07T10:31:13" connectionCheck="true">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2019-03-02T20:06:51" contentDescription="###XMLINFO=2;1;"/>
+	<contentHeader name="examples-pcworx-testkit" version="1585555666" modificationDateTime="2020-03-30T11:07:46" connectionCheck="true">
 		<coordinateInfo>
 			<pageSize x="999" y="9999"/>
 			<fbd>
@@ -15,9 +15,9 @@
 		</coordinateInfo>
 	</contentHeader>
 	<libraries>
-		<library name="LegacyProConOS" firmware="true" path="C:\ProgramData\Phoenix Contact\PC WORX\6_30_500\plc\FW_LIB\LegacyProConOS\LegacyProConOS.fwl"/>
-		<library name="Modbus_RTU_1" firmware="false" path="D:\dev\pcworx-testkit\bin\libraries\Modbus_RTU_1.mwt"/>
-		<library name="pcworx_testkit_1" firmware="false" path="D:\dev\pcworx-testkit\bin\libraries\pcworx_testkit_1.mwt"/>
+		<library name="LegacyProConOS" firmware="true" path="C:\ProgramData\Phoenix Contact\PC WORX\6_30_665\plc\FW_LIB\LegacyProConOS\LegacyProConOS.fwl"/>
+		<library name="Modbus_RTU_3" firmware="false" path="D:\dev\axhelp\pcworx-testkit\bin\libraries\Modbus_RTU_3\Modbus_RTU_3.mwt"/>
+		<library name="pcworx-testkit_2" firmware="false" path="D:\dev\axhelp\pcworx-testkit\bin\pcworx-testkit_2.mwt"/>
 	</libraries>
 	<types>
 		<dataTypes/>
