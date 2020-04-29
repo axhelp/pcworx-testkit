@@ -6,3 +6,6 @@
 <ADD>@POUS.IL_UNI07.XML</ADD>
 <ADD>@HW.ZIP</ADD>
 <ADD>@HW.XML</ADD>
+<ADD>@TYPES.TestKit.XML</ADD>
+<ADD>@POUS.GetTestResult.XML</ADD>
+<ADD>@POUS.TK_BoolToString.XML</ADD>
