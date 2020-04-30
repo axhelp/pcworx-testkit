@@ -1,6 +1,6 @@
 <project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
 	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-04-29T16:50:34" contentDescription="###XMLINFO=2;1;"/>
-	<contentHeader name="pcworx-testkit" version="1588169223" modificationDateTime="2020-04-29T17:07:03" connectionCheck="true">
+	<contentHeader name="pcworx-testkit" version="1588247405" modificationDateTime="2020-04-30T14:50:05" connectionCheck="true">
 		<coordinateInfo>
 			<pageSize x="999" y="9999"/>
 			<fbd>
@@ -19,7 +19,12 @@
 			<datatypeWorksheet>
 				<html xmlns="http://www.w3.org/1999/xhtml">
 					<div xml:space="preserve" id="MWTDESCRIPTION" wsName="TestKit" xmlns="http://www.w3.org/1999/xhtml">TYPE<br/>	STRING_512			: STRING(512);<br/>
-						<br/>    udtTestResult:<br/>        STRUCT<br/>			xExecuted	: BOOL;<br/>            xError      : BOOL;<br/>            strError    : STRING_512;<br/>        END_STRUCT;<br/>END_TYPE<br/>
+						<br/>    udtTestItemResult:<br/>        STRUCT<br/>			xEnabled	: BOOL;<br/>			strName		: STRING_512;<br/>			xExecuted	: BOOL;<br/>            xFailed     : BOOL;<br/>            strMessage  : STRING_512;<br/>        END_STRUCT;<br/>
+						<br/>	arrTestItemsResults : ARRAY [0..99] OF udtTestItemResult;<br/>
+						<br/>	udtTestResultStats:<br/>		STRUCT<br/>			iPassed		: INT;<br/>			iFailed		: INT;<br/>			iTotal		: INT;<br/>		END_STRUCT;<br/>
+						<br/>	udtTestResultSummary:<br/>		STRUCT<br/>			Result		: udtTestItemResult;<br/>			Stats		: udtTestResultStats;<br/>		END_STRUCT;<br/>
+						<br/>	udtTestCaseResult:<br/>		STRUCT<br/>			Summary		: udtTestResultSummary;<br/>			Tests		: arrTestItemsResults;<br/>		END_STRUCT;<br/>
+						<br/>END_TYPE<br/>
 					</div>
 				</html>
 			</datatypeWorksheet>

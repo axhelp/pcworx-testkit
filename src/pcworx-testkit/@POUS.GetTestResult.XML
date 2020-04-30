@@ -1,6 +1,6 @@
 <project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
 	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-04-29T16:51:27" contentDescription="###XMLINFO=2;1;"/>
-	<contentHeader name="pcworx-testkit" version="1588173077" modificationDateTime="2020-04-29T18:11:17" connectionCheck="true">
+	<contentHeader name="pcworx-testkit" version="1588249976" modificationDateTime="2020-04-30T15:32:56" connectionCheck="true">
 		<coordinateInfo>
 			<pageSize x="999" y="9999"/>
 			<fbd>
@@ -17,9 +17,14 @@
 	<types>
 		<dataTypes/>
 		<pous>
-			<pou name="GetTestResult" pouType="functionBlock" pouGroup="TestKit" lastChange="2020-04-29T18:11:17">
+			<pou name="GetTestResult" pouType="functionBlock" pouGroup="TestKit" lastChange="2020-04-30T15:32:56">
 				<interface>
 					<inputVars retain="false">
+						<variable name="xEnabled" group="Inputs">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
 						<variable name="strTestName" group="Inputs">
 							<type>
 								<derived name="STRING_512"/>
@@ -39,7 +44,7 @@
 					<outputVars retain="false">
 						<variable name="Result" group="Output">
 							<type>
-								<derived name="udtTestResult"/>
+								<derived name="udtTestItemResult"/>
 							</type>
 						</variable>
 					</outputVars>
@@ -48,10 +53,12 @@
 					<ST>
 						<worksheet name="GetTestResult">
 							<html xmlns="http://www.w3.org/1999/xhtml">
-								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">IF EQ_STRING(strActual, strExpected) THEN<br/>    Result.xError   := FALSE;<br/>    Result.strError := '';<br/>
-									<br/>ELSE<br/>    Result.xError              := TRUE;<br/>
-									<br/>    Result.strError            := '';<br/>    Result.strError            := CONCAT(Result.strError, strTestName);<br/>    Result.strError            := CONCAT(Result.strError, ' test failed. Expected: ');<br/>    Result.strError            := CONCAT(Result.strError, strExpected);<br/>    Result.strError            := CONCAT(Result.strError, '. Actual: ');<br/>    Result.strError            := CONCAT(Result.strError, strActual);<br/>
-									<br/>END_IF;<br/>
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">Result.strName					:= strTestName;<br/>Result.strMessage				:= '';<br/>Result.xEnabled					:= FALSE;<br/>Result.xExecuted				:= FALSE;<br/>Result.xFailed					:= FALSE;<br/>
+									<br/>
+									<br/>IF xEnabled THEN<br/>	Result.xEnabled				:= xEnabled;<br/>	<br/>	IF EQ_STRING(strActual, strExpected) THEN<br/>	    Result.xFailed   		:= FALSE;<br/>	    Result.strMessage 		:= 'PASS';<br/>
+									<br/>	ELSE<br/>	    Result.xFailed			:= TRUE;<br/>
+									<br/>	    Result.strMessage		:= '';<br/>	    Result.strMessage		:= CONCAT(Result.strMessage, 'FAIL. Expected: ');<br/>	    Result.strMessage		:= CONCAT(Result.strMessage, strExpected);<br/>	    Result.strMessage		:= CONCAT(Result.strMessage, '. Actual: ');<br/>	    Result.strMessage		:= CONCAT(Result.strMessage, strActual);<br/>	END_IF;<br/>
+									<br/>	Result.xExecuted			:= TRUE;<br/>END_IF;<br/>
 								</p>
 							</html>
 						</worksheet>

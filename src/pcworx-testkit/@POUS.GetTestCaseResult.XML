@@ -1,0 +1,78 @@
+<project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-04-30T14:34:36" contentDescription="###XMLINFO=2;1;"/>
+	<contentHeader name="pcworx-testkit" version="1588249452" modificationDateTime="2020-04-30T15:24:12" connectionCheck="true">
+		<coordinateInfo>
+			<pageSize x="999" y="9999"/>
+			<fbd>
+				<scaling x="2" y="2"/>
+			</fbd>
+			<ld>
+				<scaling x="2" y="2"/>
+			</ld>
+			<sfc>
+				<scaling x="2" y="2"/>
+			</sfc>
+		</coordinateInfo>
+	</contentHeader>
+	<types>
+		<dataTypes/>
+		<pous>
+			<pou name="GetTestCaseResult" pouType="functionBlock" pouGroup="TestKit" lastChange="2020-04-30T15:24:12">
+				<interface>
+					<inputVars retain="false">
+						<variable name="Tests" group="Inputs">
+							<type>
+								<derived name="arrTestItemsResults"/>
+							</type>
+						</variable>
+					</inputVars>
+					<localVars retain="false">
+						<variable name="iTestItemNum" group="Inputs">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="Test" group="Inputs">
+							<type>
+								<derived name="udtTestItemResult"/>
+							</type>
+						</variable>
+					</localVars>
+					<outputVars retain="false">
+						<variable name="Result" group="Output">
+							<type>
+								<derived name="udtTestCaseResult"/>
+							</type>
+						</variable>
+					</outputVars>
+				</interface>
+				<body>
+					<ST>
+						<worksheet name="GetTestCaseResult">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">Result.Summary.Result.strMessage			:= '';<br/>Result.Summary.Result.xExecuted				:= TRUE;<br/>Result.Summary.Result.xFailed				:= FALSE;<br/>Result.Summary.Stats.iFailed				:= 0;<br/>Result.Summary.Stats.iPassed				:= 0;<br/>Result.Summary.Stats.iTotal					:= 0;<br/>
+									<br/>
+									<br/>FOR iTestItemNum := 0 TO 99 DO<br/>	Test									:= Tests[iTestItemNum];<br/>
+									<br/>	IF Tests[iTestItemNum].xEnabled THEN<br/>		Result.Summary.Stats.iTotal			:= Result.Summary.Stats.iTotal + 1;<br/>		Result.Summary.Result.xExecuted		:= Result.Summary.Result.xExecuted AND Test.xExecuted;<br/>
+									<br/>		IF Test.xExecuted THEN<br/>			Result.Summary.Result.xFailed	:= Result.Summary.Result.xFailed OR Test.xFailed;<br/>
+									<br/>			IF Test.xFailed THEN<br/>				Result.Summary.Stats.iFailed:= Result.Summary.Stats.iFailed + 1;<br/>			ELSE<br/>				Result.Summary.Stats.iPassed:= Result.Summary.Stats.iPassed + 1;<br/>			END_IF;<br/>		END_IF;<br/>	END_IF;<br/>END_FOR;<br/>
+									<br/>
+									<br/>Result.Summary.Result.strMessage			:= '';<br/>
+									<br/>Result.Summary.Result.strMessage			:= CONCAT(Result.Summary.Result.strMessage, 'Passed: ');<br/>Result.Summary.Result.strMessage			:= CONCAT(<br/>													Result.Summary.Result.strMessage, <br/>													INT_TO_STRING(Result.Summary.Stats.iPassed, '%d')<br/>												);<br/>Result.Summary.Result.strMessage			:= CONCAT(Result.Summary.Result.strMessage, '/');<br/>Result.Summary.Result.strMessage			:= CONCAT(<br/>													Result.Summary.Result.strMessage, <br/>													INT_TO_STRING(Result.Summary.Stats.iTotal, '%d')<br/>												);<br/>
+								</p>
+							</html>
+						</worksheet>
+					</ST>
+				</body>
+				<documentation>
+					<html xmlns="http://www.w3.org/1999/xhtml">
+						<div xml:space="preserve" id="MWTDESCRIPTION" wsName="GetTestCaseResultT" xmlns="http://www.w3.org/1999/xhtml"/>
+					</html>
+				</documentation>
+			</pou>
+		</pous>
+	</types>
+	<instances>
+		<configurations/>
+	</instances>
+</project>
