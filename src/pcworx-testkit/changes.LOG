@@ -9,3 +9,5 @@
 <ADD>@TYPES.TestKit.XML</ADD>
 <ADD>@POUS.GetTestResult.XML</ADD>
 <ADD>@POUS.TK_BoolToString.XML</ADD>
+<ADD>@POUS.TK_IntToString.XML</ADD>
+<ADD>@POUS.TK_RealToString.XML</ADD>
