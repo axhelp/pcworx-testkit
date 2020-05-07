@@ -12,3 +12,5 @@
 <ADD>@POUS.TK_IntToString.XML</ADD>
 <ADD>@POUS.TK_RealToString.XML</ADD>
 <ADD>@POUS.GetTestCaseResult.XML</ADD>
+<ADD>@POUS.GetTestResult_1.XML</ADD>
+<RENAME>oldfile="@POUS.GetTestResult_1.XML" newfile="@POUS.WaitTestResult.XML"</RENAME >
