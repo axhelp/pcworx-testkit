@@ -1,6 +1,6 @@
 <project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
 	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-04-30T10:39:01" contentDescription="###XMLINFO=2;1;"/>
-	<contentHeader name="pcworx-testkit" version="1588232680" modificationDateTime="2020-04-30T10:44:40" connectionCheck="true">
+	<contentHeader name="pcworx-testkit" version="1588754685" modificationDateTime="2020-05-06T11:44:45" connectionCheck="true">
 		<coordinateInfo>
 			<pageSize x="999" y="9999"/>
 			<fbd>
@@ -17,7 +17,7 @@
 	<types>
 		<dataTypes/>
 		<pous>
-			<pou name="TK_RealToString" pouType="functionBlock" pouGroup="Helpers" lastChange="2020-04-30T10:44:40">
+			<pou name="TK_RealToString" pouType="functionBlock" pouGroup="Helpers" lastChange="2020-05-06T11:44:45">
 				<interface>
 					<inputVars retain="false">
 						<variable name="rValue" group="Inputs">
@@ -50,8 +50,8 @@
 					<ST>
 						<worksheet name="TK_RealToString">
 							<html xmlns="http://www.w3.org/1999/xhtml">
-								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">IF uiPrecision &lt;= 0 THEN<br/>	uiPrecision			:= 2;<br/>END_IF;<br/>
-									<br/>strFormatString			:= CONCAT('%.', UINT_TO_STRING(uiPrecision, '%d'));<br/>strFormatString			:= CONCAT(strFormatString, 'f');<br/>
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">IF uiPrecision &lt;= UINT#0 THEN<br/>	uiPrecision			:= UINT#2;<br/>END_IF;<br/>
+									<br/>strFormatString			:= CONCAT('%.', UINT_TO_STRING(uiPrecision, '%u'));<br/>strFormatString			:= CONCAT(strFormatString, 'f');<br/>
 									<br/>strOutput				:= REAL_TO_STRING(rValue, strFormatString);<br/>
 								</p>
 							</html>
