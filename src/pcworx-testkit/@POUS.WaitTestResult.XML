@@ -1,6 +1,6 @@
 <project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
 	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-05-06T15:13:33" contentDescription="###XMLINFO=2;1;"/>
-	<contentHeader name="pcworx-testkit" version="1588769659" modificationDateTime="2020-05-06T15:54:19" connectionCheck="true">
+	<contentHeader name="pcworx-testkit" version="1591009708" modificationDateTime="2020-06-01T14:08:28" connectionCheck="true">
 		<coordinateInfo>
 			<pageSize x="999" y="9999"/>
 			<fbd>
@@ -17,7 +17,7 @@
 	<types>
 		<dataTypes/>
 		<pous>
-			<pou name="WaitTestResult" pouType="functionBlock" pouGroup="TestKit" lastChange="2020-05-06T15:54:19">
+			<pou name="WaitTestResult" pouType="functionBlock" pouGroup="TestKit" lastChange="2020-06-01T14:08:28">
 				<interface>
 					<inputVars retain="false">
 						<variable name="xEnabled" group="Inputs">
@@ -74,6 +74,11 @@
 								<derived name="udtTestItemResult"/>
 							</type>
 						</variable>
+						<variable name="tEt" group="Output">
+							<type>
+								<TIME/>
+							</type>
+						</variable>
 					</outputVars>
 				</interface>
 				<body>
@@ -90,7 +95,7 @@
 									<br/>	ELSIF xTimeout THEN<br/>	    Result.xFailed			:= TRUE;<br/>
 									<br/>	    Result.strMessage		:= '';<br/>	    Result.strMessage		:= CONCAT(Result.strMessage, 'FAIL. Wait for: ');<br/>	    Result.strMessage		:= CONCAT(Result.strMessage, strWaitForValue);<br/>	    Result.strMessage		:= CONCAT(Result.strMessage, '. Actual: ');<br/>	    Result.strMessage		:= CONCAT(Result.strMessage, strActual);<br/>		Result.strMessage		:= CONCAT(Result.strMessage, '. Timeout: ');<br/>	    Result.strMessage		:= CONCAT(Result.strMessage, TIME_TO_STRING(tTimeout, '%u'));<br/>
 									<br/>		Result.xExecuted		:= TRUE;<br/>		xEnableTimeout			:= FALSE;<br/>	END_IF;<br/>END_IF;<br/>
-									<br/>TON_TIMEOUT.IN					:= xEnableTimeout;<br/>TON_TIMEOUT.PT					:= tTimeout;<br/>TON_TIMEOUT();<br/>xTimeout						:= TON_TIMEOUT.Q;<br/>
+									<br/>TON_TIMEOUT.IN					:= xEnableTimeout;<br/>TON_TIMEOUT.PT					:= tTimeout;<br/>TON_TIMEOUT();<br/>xTimeout						:= TON_TIMEOUT.Q;<br/>tEt								:= TON_TIMEOUT.ET;<br/>
 								</p>
 							</html>
 						</worksheet>
