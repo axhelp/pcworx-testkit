@@ -1,0 +1,42 @@
+(*@PROPERTIES_EX@
+TYPE: DATA_TYPE
+LOCALE: 0
+*)
+TYPE
+	STRING_512			: STRING(512);
+
+    udtTestItemResult:
+        STRUCT
+			xEnabled		: BOOL;
+			xPermission		: BOOL;
+			xInitDone		: BOOL;
+			xReadyToCheck 	: BOOL;
+			strName			: STRING_512;
+			xExecuted		: BOOL;
+            xFailed     	: BOOL;
+            strMessage  	: STRING_512;
+        END_STRUCT;
+
+	arrTestItemsResults : ARRAY [0..49] OF udtTestItemResult;
+
+	udtTestResultStats:
+		STRUCT
+			iPassed		: INT;
+			iFailed		: INT;
+			iTotal		: INT;
+		END_STRUCT;
+
+	udtTestResultSummary:
+		STRUCT
+			Result		: udtTestItemResult;
+			Stats		: udtTestResultStats;
+		END_STRUCT;
+
+	udtTestCaseResult:
+		STRUCT
+			Summary		: udtTestResultSummary;
+			Tests		: arrTestItemsResults;
+		END_STRUCT;
+
+END_TYPE
+
