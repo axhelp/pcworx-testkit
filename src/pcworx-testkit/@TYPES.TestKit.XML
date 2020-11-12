@@ -1,6 +1,6 @@
 <project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
 	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-04-29T16:50:34" contentDescription="###XMLINFO=2;1;"/>
-	<contentHeader name="pcworx-testkit" version="1592221237" modificationDateTime="2020-06-15T14:40:37" connectionCheck="true">
+	<contentHeader name="pcworx-testkit" version="1599227476" modificationDateTime="2020-09-04T16:51:16" connectionCheck="true">
 		<coordinateInfo>
 			<pageSize x="999" y="9999"/>
 			<fbd>

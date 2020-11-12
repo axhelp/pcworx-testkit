@@ -9,7 +9,7 @@ GROUP: Serial
 (*@KEY@:DESCRIPTION*)
 
 (*@KEY@:END_DESCRIPTION*)
-FUNCTION_BLOCK IL_UNI07
+FUNCTION_BLOCK AXL_F_RSUNI
 
 (*Group:Inputs*)
 
@@ -25,8 +25,8 @@ END_VAR
 
 VAR_IN_OUT
 	udtRS485Line :	udtRS485Frame;
-	arrInputAddress :	MB2_RSUNI_ARR_B_1_14;(*Process Data Input*)
-	arrOutputAddress :	MB2_RSUNI_ARR_B_1_14;(*Process Data Output*)
+	arrInputAddress :	MB2_AXL_RSUNI2_ARR_B_0_19;(*Process Data Input*)
+	arrOutputAddress :	MB2_AXL_RSUNI2_ARR_B_0_19;(*Process Data Output*)
 END_VAR
 
 
@@ -43,8 +43,8 @@ END_VAR
 
 
 VAR
-	udtBufferReceive :	udtIB_IL_RSUNI_Buffer;
-	udtBufferSend :	udtIB_IL_RSUNI_Buffer;
+	udtBufferReceive :	udtAXL_F_RS_UNI_Buffer;
+	udtBufferSend :	udtAXL_F_RS_UNI_Buffer;
 	xSending :	BOOL;
 	iByteNum :	INT;
 	iBytesToCopy :	INT;
@@ -64,8 +64,11 @@ VAR
 END_VAR
 
 
+(*Group:Default*)
+
+
 (*@KEY@: WORKSHEET
-NAME: IL_UNI07
+NAME: AXL_F_RSUNI
 IEC_LANGUAGE: ST
 *)
 (* ========================================== Clearing data ===================================================== *)
@@ -93,7 +96,7 @@ bStatusBits.X7 := FALSE;							(* DSR *)
 (* ======================================== Execute commands ======================================================*)
 
 (* "Read number of characters received" command *)
-IF arrInputAddress[1] = BYTE#16#00 THEN
+IF arrInputAddress[0] = BYTE#16#00 THEN
 
 	IF xConsoleLog THEN
 		Console.strSource				:= strConsoleId;
@@ -101,17 +104,17 @@ IF arrInputAddress[1] = BYTE#16#00 THEN
 		Console();
 	END_IF;
 
-	arrOutputAddress[1] 			:= arrInputAddress[1];						(* Command mirror *)
-	arrOutputAddress[2] 			:= bStatusBits;								(* Status bits *)
+	arrOutputAddress[0] 			:= arrInputAddress[0];						(* Command mirror *)
+	arrOutputAddress[1] 			:= bStatusBits;								(* Status bits *)
 
 	wNumberOfCharactersReceived 	:= INT_TO_WORD(udtBufferReceive.iWordsNo);
-	arrOutputAddress[3] 			:= wNumberOfCharactersReceived.B0;
-	arrOutputAddress[4] 			:= wNumberOfCharactersReceived.B1;
+	arrOutputAddress[2] 			:= wNumberOfCharactersReceived.B0;
+	arrOutputAddress[3] 			:= wNumberOfCharactersReceived.B1;
 
 
 (* “Transmit characters” command *)
-ELSIF arrInputAddress[1] = BYTE#16#10 
-	OR arrInputAddress[1] = BYTE#16#50  
+ELSIF arrInputAddress[0] = BYTE#16#10 
+	OR arrInputAddress[0] = BYTE#16#50  
 	AND NOT xSending 
 	THEN
 
@@ -121,13 +124,13 @@ ELSIF arrInputAddress[1] = BYTE#16#10
 			Console();
 		END_IF;
 
-		iWordsToSend				:= BYTE_TO_INT(arrInputAddress[3]);
+		iWordsToSend				:= BYTE_TO_INT(arrInputAddress[2]);
 		iBytesToCopy				:= iWordsToSend * 2;
 
-		arrOutputAddress[1] 		:= arrInputAddress[1];						(* Command mirror *)
-		arrOutputAddress[2] 		:= bStatusBits;								(* Status bits *)
+		arrOutputAddress[0] 		:= arrInputAddress[0];						(* Command mirror *)
+		arrOutputAddress[1] 		:= bStatusBits;								(* Status bits *)
 
-		iFirstAddressIndex			:= 4;
+		iFirstAddressIndex			:= 3;
 		iLastAddressIndex			:= MIN(iBytesToCopy - 1, 14);
 		iFirstBufferIndex			:= 0;
 
@@ -142,7 +145,7 @@ ELSIF arrInputAddress[1] = BYTE#16#10
 
 
 (* "Read characters" command *)
-ELSIF arrInputAddress[1] = BYTE#16#30 THEN
+ELSIF arrInputAddress[0] = BYTE#16#30 THEN
 
 	IF xConsoleLog THEN
 		Console.strSource			:= strConsoleId;
@@ -150,15 +153,15 @@ ELSIF arrInputAddress[1] = BYTE#16#30 THEN
 		Console();
 	END_IF;
 
-	arrOutputAddress[1] 		:= arrInputAddress[1];						(* Command mirror *)
+	arrOutputAddress[0] 		:= arrInputAddress[0];						(* Command mirror *)
 	bStatusBits.X0 				:= FALSE;
-	arrOutputAddress[2] 		:= bStatusBits;								(* Status bits *)
+	arrOutputAddress[1] 		:= bStatusBits;								(* Status bits *)
 
-	arrOutputAddress[3] 		:= INT_TO_BYTE(udtBufferReceive.iWordsNo);	(* Number of valid characters available in the input data *)
+	arrOutputAddress[2] 		:= INT_TO_BYTE(udtBufferReceive.iWordsNo);	(* Number of valid characters available in the input data *)
 
 	iBytesToCopy 				:= udtBufferReceive.iWordsNo * 2;
 
-	iFirstAddressIndex			:= 4;
+	iFirstAddressIndex			:= 3;
 	iLastAddressIndex			:= MIN(iFirstAddressIndex + iBytesToCopy - 1, 14);
 	iFirstBufferIndex			:= 0;
 	FOR iAddressIndex := iFirstAddressIndex TO iLastAddressIndex DO
@@ -170,8 +173,8 @@ ELSIF arrInputAddress[1] = BYTE#16#30 THEN
 
 
 (* "Read counters" command *)
-ELSIF arrInputAddress[1] = BYTE#16#3E 
-	AND arrInputAddress[2] = BYTE#16#00 THEN
+ELSIF arrInputAddress[0] = BYTE#16#3E 
+	AND arrInputAddress[1] = BYTE#16#00 THEN
 
 		IF xConsoleLog THEN
 			Console.strSource			:= strConsoleId;
@@ -179,19 +182,19 @@ ELSIF arrInputAddress[1] = BYTE#16#3E
 			Console();
 		END_IF;
 
-		arrOutputAddress[1] 		:= arrInputAddress[1];						(* Command mirror *)
-		arrOutputAddress[2] 		:= bStatusBits;								(* Status bits *)
+		arrOutputAddress[0] 		:= arrInputAddress[0];						(* Command mirror *)
+		arrOutputAddress[1] 		:= bStatusBits;								(* Status bits *)
 
 		wWordsReceived				:= INT_TO_WORD(iWordsReceived);
-		arrOutputAddress[3]			:= wWordsReceived.B0;
-		arrOutputAddress[4]			:= wWordsReceived.B1;
+		arrOutputAddress[2]			:= wWordsReceived.B0;
+		arrOutputAddress[3]			:= wWordsReceived.B1;
 
 		wWordsTransmitted			:= INT_TO_WORD(iWordsTransmitted);
 		arrOutputAddress[7]			:= wWordsTransmitted.B0;
 		arrOutputAddress[8]			:= wWordsTransmitted.B1;
 
 (* "Write configuration" command *)
-ELSIF arrInputAddress[1] = BYTE#16#40 THEN
+ELSIF arrInputAddress[0] = BYTE#16#40 THEN
 
 	IF xConsoleLog THEN
 		Console.strSource			:= strConsoleId;
@@ -199,18 +202,18 @@ ELSIF arrInputAddress[1] = BYTE#16#40 THEN
 		Console();
 	END_IF;
 
-	arrOutputAddress[1] 		:= arrInputAddress[1];						(* Command mirror *)
-	arrOutputAddress[2] 		:= bStatusBits;								(* Status bits *)
+	arrOutputAddress[0] 		:= arrInputAddress[0];						(* Command mirror *)
+	arrOutputAddress[1] 		:= bStatusBits;								(* Status bits *)
 
 ELSE
 
 	IF xConsoleLog THEN
 		Console.strSource			:= strConsoleId;
-		Console.strMessage			:= CONCAT(BYTE_TO_STRING(arrInputAddress[1], '%x'),' command');
+		Console.strMessage			:= CONCAT(BYTE_TO_STRING(arrInputAddress[0], '%x'),' command');
 		Console();
 	END_IF;
 
-	arrOutputAddress[1] 		:= 	arrInputAddress[1];						(* Command mirror *)
+	arrOutputAddress[0] 		:= 	arrInputAddress[0];						(* Command mirror *)
 
 END_IF;
 
@@ -218,8 +221,8 @@ END_IF;
 
 
 (* ==================================== Clear xSending flag if command is changing ============================== *)
-IF arrInputAddress[1] <> BYTE#16#10  
-	AND arrInputAddress[1] <> BYTE#16#50 
+IF arrInputAddress[0] <> BYTE#16#10  
+	AND arrInputAddress[0] <> BYTE#16#50 
 	THEN
 
 		xSending	:= FALSE;

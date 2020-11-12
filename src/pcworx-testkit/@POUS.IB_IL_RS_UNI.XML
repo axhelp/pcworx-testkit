@@ -1,6 +1,6 @@
 <project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
-	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-03-30T10:13:33" contentDescription="###XMLINFO=2;1;"/>
-	<contentHeader name="examples-pcworx-testkit" version="1605167139" modificationDateTime="2020-11-12T10:45:39" connectionCheck="true">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-11-12T14:06:25" contentDescription="###XMLINFO=2;1;"/>
+	<contentHeader name="pcworx-testkit" version="1605179185" modificationDateTime="2020-11-12T14:06:25" connectionCheck="true">
 		<coordinateInfo>
 			<pageSize x="999" y="9999"/>
 			<fbd>
@@ -17,7 +17,7 @@
 	<types>
 		<dataTypes/>
 		<pous>
-			<pou name="IB_IL_RS_UNI" pouType="program" pouGroup="Serial" lastChange="2020-11-12T10:45:39">
+			<pou name="IB_IL_RS_UNI" pouType="program" pouGroup="Examples" lastChange="2020-11-12T14:06:23">
 				<interface>
 					<localVars retain="false">
 						<variable name="MB_IL_UNI07_Master" group="Master">

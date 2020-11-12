@@ -1,0 +1,85 @@
+<project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-11-12T10:39:04" contentDescription="###XMLINFO=2;1;"/>
+	<contentHeader name="examples-pcworx-testkit" version="1605167139" modificationDateTime="2020-11-12T10:45:39" connectionCheck="true">
+		<coordinateInfo>
+			<pageSize x="999" y="9999"/>
+			<fbd>
+				<scaling x="2" y="2"/>
+			</fbd>
+			<ld>
+				<scaling x="2" y="2"/>
+			</ld>
+			<sfc>
+				<scaling x="2" y="2"/>
+			</sfc>
+		</coordinateInfo>
+	</contentHeader>
+	<types>
+		<dataTypes/>
+		<pous>
+			<pou name="SLV_MOCK_AXL_F_RS_UNI" pouType="program" pouGroup="Serial" lastChange="2020-11-12T10:45:39">
+				<interface>
+					<localVars retain="false">
+						<variable name="AXL_F_RSUNI_Mock_Slave" group="Mock">
+							<type>
+								<derived name="AXL_F_RSUNI"/>
+							</type>
+						</variable>
+						<variable name="xDebug" group="Mock">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+					</localVars>
+					<externalVars retain="false">
+						<variable name="RTC_SECONDS" group="Global">
+							<type>
+								<INT/>
+							</type>
+							<documentation>
+								<html xmlns="http://www.w3.org/1999/xhtml">
+									<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">System time (seconds)</p>
+								</html>
+							</documentation>
+						</variable>
+						<variable name="udtRS485LineAXL" group="Global">
+							<type>
+								<derived name="udtRS485Frame"/>
+							</type>
+						</variable>
+						<variable name="arrInputAddressSlave" group="Global">
+							<type>
+								<derived name="MB2_AXL_RSUNI2_ARR_B_0_19"/>
+							</type>
+						</variable>
+						<variable name="arrOutputAddressSlave" group="Global">
+							<type>
+								<derived name="MB2_AXL_RSUNI2_ARR_B_0_19"/>
+							</type>
+						</variable>
+					</externalVars>
+				</interface>
+				<body>
+					<ST>
+						<worksheet name="Slave">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">(*	IB IL RS UNI (Proceess data 7 words) software replacement *)<br/>AXL_F_RSUNI_Mock_Slave.xConsoleLog				:= xDebug;<br/>AXL_F_RSUNI_Mock_Slave.strConsoleId				:= 'SLV';<br/>AXL_F_RSUNI_Mock_Slave.udtRS485Line				:= udtRS485LineAXL;<br/>AXL_F_RSUNI_Mock_Slave.arrInputAddress			:= arrOutputAddressSlave;<br/>AXL_F_RSUNI_Mock_Slave.arrOutputAddress			:= arrInputAddressSlave;<br/>
+									<br/>AXL_F_RSUNI_Mock_Slave();<br/>
+									<br/>udtRS485LineAXL							:= AXL_F_RSUNI_Mock_Slave.udtRS485Line;<br/>arrOutputAddressSlave					:= AXL_F_RSUNI_Mock_Slave.arrInputAddress;<br/>arrInputAddressSlave					:= AXL_F_RSUNI_Mock_Slave.arrOutputAddress;<br/>
+								</p>
+							</html>
+						</worksheet>
+					</ST>
+				</body>
+				<documentation>
+					<html xmlns="http://www.w3.org/1999/xhtml">
+						<div xml:space="preserve" id="MWTDESCRIPTION" wsName="SLV_MOCK_AXL_F_RS_UNIT" xmlns="http://www.w3.org/1999/xhtml"/>
+					</html>
+				</documentation>
+			</pou>
+		</pous>
+	</types>
+	<instances>
+		<configurations/>
+	</instances>
+</project>

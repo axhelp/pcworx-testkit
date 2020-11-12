@@ -4,12 +4,12 @@ LOCALE: 0
 *)
 TYPE
 
-	ARR_B_0_13 : ARRAY [0..13] OF BYTE;
+	ARR_B_0_19      : ARRAY [0..19] OF BYTE;
 
-	udtIB_IL_RSUNI_Buffer :
+	udtAXL_F_RS_UNI_Buffer :
 	STRUCT
 		iWordsNo 	: INT;
-		arrData		: ARR_B_0_13;
+		arrData		: ARR_B_0_19;
 	END_STRUCT;
 END_TYPE
 

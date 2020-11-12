@@ -16,7 +16,10 @@ FUNCTION_BLOCK WaitTestResult
 
 VAR_INPUT
 	xEnabled :	BOOL;
+	xDoNotThrow :	BOOL;
 	xPermission :	BOOL;
+	xExternalFail :	BOOL;
+	xExternalFailMessage :	STRING_512;
 	strTestName :	STRING_512;
 	strWaitForValue :	STRING_512;
 	strActual :	STRING_512;
@@ -29,6 +32,7 @@ END_VAR
 
 VAR
 	TON_TIMEOUT :	TON;
+	iDummy :	INT;
 END_VAR
 
 
@@ -78,14 +82,13 @@ IF xEnabled THEN
     Result.strMessage 			:= CONCAT(Result.strMessage, 'Waiting');
 	Result.strMessage			:= CONCAT(Result.strMessage, '. Elapsed: ');
     Result.strMessage			:= CONCAT(Result.strMessage, TIME_TO_STRING(TON_TIMEOUT.ET, '%u'));
+	
+	IF xExternalFail THEN
+		Result.xFailed			:= TRUE;
 
-	IF EQ_STRING(strActual, strWaitForValue) THEN
-	    Result.xFailed   		:= FALSE;
-
-		Result.strMessage		:= '';
-	    Result.strMessage 		:= CONCAT(Result.strMessage, 'PASS');
-		Result.strMessage		:= CONCAT(Result.strMessage, '. Elapsed: ');
-	    Result.strMessage		:= CONCAT(Result.strMessage, TIME_TO_STRING(TON_TIMEOUT.ET, '%u'));
+	    Result.strMessage		:= '';
+	    Result.strMessage		:= CONCAT(Result.strMessage, 'FAIL. External fail: ');
+	    Result.strMessage		:= CONCAT(Result.strMessage, xExternalFailMessage);
 
 		Result.xExecuted		:= TRUE;
 		xEnableTimeout			:= FALSE;
@@ -103,6 +106,17 @@ IF xEnabled THEN
 
 		Result.xExecuted		:= TRUE;
 		xEnableTimeout			:= FALSE;
+
+	ELSIF EQ_STRING(strActual, strWaitForValue) THEN
+	    Result.xFailed   		:= FALSE;
+
+		Result.strMessage		:= '';
+	    Result.strMessage 		:= CONCAT(Result.strMessage, 'PASS');
+		Result.strMessage		:= CONCAT(Result.strMessage, '. Elapsed: ');
+	    Result.strMessage		:= CONCAT(Result.strMessage, TIME_TO_STRING(TON_TIMEOUT.ET, '%u'));
+
+		Result.xExecuted		:= TRUE;
+		xEnableTimeout			:= FALSE;
 	END_IF;
 END_IF;
 
@@ -111,6 +125,10 @@ TON_TIMEOUT.PT					:= tTimeout;
 TON_TIMEOUT();
 xTimeout						:= TON_TIMEOUT.Q;
 tEt								:= TON_TIMEOUT.ET;
+
+IF Result.xFailed AND NOT xDoNotThrow THEN
+	iDummy				:= 0 / 0;
+END_IF;
 
 (*@KEY@: END_WORKSHEET *)
 END_FUNCTION_BLOCK

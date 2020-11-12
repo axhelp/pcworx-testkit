@@ -1,6 +1,6 @@
 <project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
-	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2019-03-02T20:06:51" contentDescription="###XMLINFO=2;1;"/>
-	<contentHeader name="pcworx-testkit" version="1605174781" modificationDateTime="2020-11-12T12:53:01" connectionCheck="true">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-11-11T14:22:49" contentDescription="###XMLINFO=2;1;"/>
+	<contentHeader name="pcworx-testkit" version="1605179233" modificationDateTime="2020-11-12T14:07:13" connectionCheck="true">
 		<coordinateInfo>
 			<pageSize x="999" y="9999"/>
 			<fbd>
@@ -17,7 +17,7 @@
 	<types>
 		<dataTypes/>
 		<pous>
-			<pou name="IL_UNI07" pouType="functionBlock" pouGroup="Serial" lastChange="2020-11-12T12:53:01">
+			<pou name="AXL_F_RSUNI" pouType="functionBlock" pouGroup="Serial" lastChange="2020-11-12T14:07:13">
 				<interface>
 					<inputVars retain="false">
 						<variable name="xConsoleLog" group="Inputs">
@@ -39,7 +39,7 @@
 						</variable>
 						<variable name="arrInputAddress" group="Inouts">
 							<type>
-								<derived name="MB2_RSUNI_ARR_B_1_14"/>
+								<derived name="MB2_AXL_RSUNI2_ARR_B_0_19"/>
 							</type>
 							<documentation>
 								<html xmlns="http://www.w3.org/1999/xhtml">
@@ -49,7 +49,7 @@
 						</variable>
 						<variable name="arrOutputAddress" group="Inouts">
 							<type>
-								<derived name="MB2_RSUNI_ARR_B_1_14"/>
+								<derived name="MB2_AXL_RSUNI2_ARR_B_0_19"/>
 							</type>
 							<documentation>
 								<html xmlns="http://www.w3.org/1999/xhtml">
@@ -71,12 +71,12 @@
 						</variable>
 						<variable name="udtBufferReceive" group="Internal">
 							<type>
-								<derived name="udtIB_IL_RSUNI_Buffer"/>
+								<derived name="udtAXL_F_RS_UNI_Buffer"/>
 							</type>
 						</variable>
 						<variable name="udtBufferSend" group="Internal">
 							<type>
-								<derived name="udtIB_IL_RSUNI_Buffer"/>
+								<derived name="udtAXL_F_RS_UNI_Buffer"/>
 							</type>
 						</variable>
 						<variable name="xSending" group="Internal">
@@ -159,11 +159,16 @@
 								<INT/>
 							</type>
 						</variable>
+						<variable name="" group="Default">
+							<type>
+								<INT/>
+							</type>
+						</variable>
 					</localVars>
 				</interface>
 				<body>
 					<ST>
-						<worksheet name="IL_UNI07">
+						<worksheet name="AXL_F_RSUNI">
 							<html xmlns="http://www.w3.org/1999/xhtml">
 								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">(* ========================================== Clearing data ===================================================== *)<br/>FOR iByteToCopy	:= 1 TO 14 DO<br/>
 									<br/>	arrOutputAddress[iByteToCopy] := BYTE#16#00;<br/>
@@ -173,43 +178,43 @@
 									<br/>(* =============================================================================================================== *)<br/>
 									<br/>
 									<br/>(* ======================================== Execute commands ======================================================*)<br/>
-									<br/>(* "Read number of characters received" command *)<br/>IF arrInputAddress[1] = BYTE#16#00 THEN<br/>
+									<br/>(* "Read number of characters received" command *)<br/>IF arrInputAddress[0] = BYTE#16#00 THEN<br/>
 									<br/>	IF xConsoleLog THEN<br/>		Console.strSource				:= strConsoleId;<br/>		Console.strMessage				:= CONCAT('ReadNumberOfChar command, number ', INT_TO_STRING(udtBufferReceive.iWordsNo, '%d'));<br/>		Console();<br/>	END_IF;<br/>
-									<br/>	arrOutputAddress[1] 			:= arrInputAddress[1];						(* Command mirror *)<br/>	arrOutputAddress[2] 			:= bStatusBits;								(* Status bits *)<br/>
-									<br/>	wNumberOfCharactersReceived 	:= INT_TO_WORD(udtBufferReceive.iWordsNo);<br/>	arrOutputAddress[3] 			:= wNumberOfCharactersReceived.B0;<br/>	arrOutputAddress[4] 			:= wNumberOfCharactersReceived.B1;<br/>
+									<br/>	arrOutputAddress[0] 			:= arrInputAddress[0];						(* Command mirror *)<br/>	arrOutputAddress[1] 			:= bStatusBits;								(* Status bits *)<br/>
+									<br/>	wNumberOfCharactersReceived 	:= INT_TO_WORD(udtBufferReceive.iWordsNo);<br/>	arrOutputAddress[2] 			:= wNumberOfCharactersReceived.B0;<br/>	arrOutputAddress[3] 			:= wNumberOfCharactersReceived.B1;<br/>
 									<br/>
-									<br/>(* “Transmit characters” command *)<br/>ELSIF arrInputAddress[1] = BYTE#16#10 <br/>	OR arrInputAddress[1] = BYTE#16#50  <br/>	AND NOT xSending <br/>	THEN<br/>
+									<br/>(* “Transmit characters” command *)<br/>ELSIF arrInputAddress[0] = BYTE#16#10 <br/>	OR arrInputAddress[0] = BYTE#16#50  <br/>	AND NOT xSending <br/>	THEN<br/>
 									<br/>		IF xConsoleLog THEN<br/>			Console.strSource			:= strConsoleId;<br/>			Console.strMessage			:= 'TransmitChar command';<br/>			Console();<br/>		END_IF;<br/>
-									<br/>		iWordsToSend				:= BYTE_TO_INT(arrInputAddress[3]);<br/>		iBytesToCopy				:= iWordsToSend * 2;<br/>
-									<br/>		arrOutputAddress[1] 		:= arrInputAddress[1];						(* Command mirror *)<br/>		arrOutputAddress[2] 		:= bStatusBits;								(* Status bits *)<br/>
-									<br/>		iFirstAddressIndex			:= 4;<br/>		iLastAddressIndex			:= MIN(iBytesToCopy - 1, 14);<br/>		iFirstBufferIndex			:= 0;<br/>
+									<br/>		iWordsToSend				:= BYTE_TO_INT(arrInputAddress[2]);<br/>		iBytesToCopy				:= iWordsToSend * 2;<br/>
+									<br/>		arrOutputAddress[0] 		:= arrInputAddress[0];						(* Command mirror *)<br/>		arrOutputAddress[1] 		:= bStatusBits;								(* Status bits *)<br/>
+									<br/>		iFirstAddressIndex			:= 3;<br/>		iLastAddressIndex			:= MIN(iBytesToCopy - 1, 14);<br/>		iFirstBufferIndex			:= 0;<br/>
 									<br/>		FOR iAddressIndex := iFirstAddressIndex TO iLastAddressIndex DO<br/>			udtBufferSend.arrData[iFirstBufferIndex] 	:= arrInputAddress[iAddressIndex];<br/>			iFirstBufferIndex 							:= iFirstBufferIndex + 1;<br/>		END_FOR;<br/>
 									<br/>		udtBufferSend.iWordsNo		:= iWordsToSend;<br/>
 									<br/>		xSending					:= TRUE;<br/>
 									<br/>
-									<br/>(* "Read characters" command *)<br/>ELSIF arrInputAddress[1] = BYTE#16#30 THEN<br/>
+									<br/>(* "Read characters" command *)<br/>ELSIF arrInputAddress[0] = BYTE#16#30 THEN<br/>
 									<br/>	IF xConsoleLog THEN<br/>		Console.strSource			:= strConsoleId;<br/>		Console.strMessage			:= CONCAT('ReadChar command, length ', INT_TO_STRING(udtBufferReceive.iWordsNo, '%d'));<br/>		Console();<br/>	END_IF;<br/>
-									<br/>	arrOutputAddress[1] 		:= arrInputAddress[1];						(* Command mirror *)<br/>	bStatusBits.X0 				:= FALSE;<br/>	arrOutputAddress[2] 		:= bStatusBits;								(* Status bits *)<br/>
-									<br/>	arrOutputAddress[3] 		:= INT_TO_BYTE(udtBufferReceive.iWordsNo);	(* Number of valid characters available in the input data *)<br/>
+									<br/>	arrOutputAddress[0] 		:= arrInputAddress[0];						(* Command mirror *)<br/>	bStatusBits.X0 				:= FALSE;<br/>	arrOutputAddress[1] 		:= bStatusBits;								(* Status bits *)<br/>
+									<br/>	arrOutputAddress[2] 		:= INT_TO_BYTE(udtBufferReceive.iWordsNo);	(* Number of valid characters available in the input data *)<br/>
 									<br/>	iBytesToCopy 				:= udtBufferReceive.iWordsNo * 2;<br/>
-									<br/>	iFirstAddressIndex			:= 4;<br/>	iLastAddressIndex			:= MIN(iFirstAddressIndex + iBytesToCopy - 1, 14);<br/>	iFirstBufferIndex			:= 0;<br/>	FOR iAddressIndex := iFirstAddressIndex TO iLastAddressIndex DO<br/>		arrOutputAddress[iAddressIndex] := udtBufferReceive.arrData[iFirstBufferIndex];<br/>		iFirstBufferIndex 				:= iFirstBufferIndex + 1;<br/>	END_FOR;<br/>
+									<br/>	iFirstAddressIndex			:= 3;<br/>	iLastAddressIndex			:= MIN(iFirstAddressIndex + iBytesToCopy - 1, 14);<br/>	iFirstBufferIndex			:= 0;<br/>	FOR iAddressIndex := iFirstAddressIndex TO iLastAddressIndex DO<br/>		arrOutputAddress[iAddressIndex] := udtBufferReceive.arrData[iFirstBufferIndex];<br/>		iFirstBufferIndex 				:= iFirstBufferIndex + 1;<br/>	END_FOR;<br/>
 									<br/>	udtBufferReceive.iWordsNo	:= 0;<br/>
 									<br/>
-									<br/>(* "Read counters" command *)<br/>ELSIF arrInputAddress[1] = BYTE#16#3E <br/>	AND arrInputAddress[2] = BYTE#16#00 THEN<br/>
+									<br/>(* "Read counters" command *)<br/>ELSIF arrInputAddress[0] = BYTE#16#3E <br/>	AND arrInputAddress[1] = BYTE#16#00 THEN<br/>
 									<br/>		IF xConsoleLog THEN<br/>			Console.strSource			:= strConsoleId;<br/>			Console.strMessage			:= 'ReadCounters command';<br/>			Console();<br/>		END_IF;<br/>
-									<br/>		arrOutputAddress[1] 		:= arrInputAddress[1];						(* Command mirror *)<br/>		arrOutputAddress[2] 		:= bStatusBits;								(* Status bits *)<br/>
-									<br/>		wWordsReceived				:= INT_TO_WORD(iWordsReceived);<br/>		arrOutputAddress[3]			:= wWordsReceived.B0;<br/>		arrOutputAddress[4]			:= wWordsReceived.B1;<br/>
+									<br/>		arrOutputAddress[0] 		:= arrInputAddress[0];						(* Command mirror *)<br/>		arrOutputAddress[1] 		:= bStatusBits;								(* Status bits *)<br/>
+									<br/>		wWordsReceived				:= INT_TO_WORD(iWordsReceived);<br/>		arrOutputAddress[2]			:= wWordsReceived.B0;<br/>		arrOutputAddress[3]			:= wWordsReceived.B1;<br/>
 									<br/>		wWordsTransmitted			:= INT_TO_WORD(iWordsTransmitted);<br/>		arrOutputAddress[7]			:= wWordsTransmitted.B0;<br/>		arrOutputAddress[8]			:= wWordsTransmitted.B1;<br/>
-									<br/>(* "Write configuration" command *)<br/>ELSIF arrInputAddress[1] = BYTE#16#40 THEN<br/>
+									<br/>(* "Write configuration" command *)<br/>ELSIF arrInputAddress[0] = BYTE#16#40 THEN<br/>
 									<br/>	IF xConsoleLog THEN<br/>		Console.strSource			:= strConsoleId;<br/>		Console.strMessage			:= 'Write configuration command';<br/>		Console();<br/>	END_IF;<br/>
-									<br/>	arrOutputAddress[1] 		:= arrInputAddress[1];						(* Command mirror *)<br/>	arrOutputAddress[2] 		:= bStatusBits;								(* Status bits *)<br/>
+									<br/>	arrOutputAddress[0] 		:= arrInputAddress[0];						(* Command mirror *)<br/>	arrOutputAddress[1] 		:= bStatusBits;								(* Status bits *)<br/>
 									<br/>ELSE<br/>
-									<br/>	IF xConsoleLog THEN<br/>		Console.strSource			:= strConsoleId;<br/>		Console.strMessage			:= CONCAT(BYTE_TO_STRING(arrInputAddress[1], '%x'),' command');<br/>		Console();<br/>	END_IF;<br/>
-									<br/>	arrOutputAddress[1] 		:= 	arrInputAddress[1];						(* Command mirror *)<br/>
+									<br/>	IF xConsoleLog THEN<br/>		Console.strSource			:= strConsoleId;<br/>		Console.strMessage			:= CONCAT(BYTE_TO_STRING(arrInputAddress[0], '%x'),' command');<br/>		Console();<br/>	END_IF;<br/>
+									<br/>	arrOutputAddress[0] 		:= 	arrInputAddress[0];						(* Command mirror *)<br/>
 									<br/>END_IF;<br/>
 									<br/>(* ============================================================================================================== *)<br/>
 									<br/>
-									<br/>(* ==================================== Clear xSending flag if command is changing ============================== *)<br/>IF arrInputAddress[1] &lt;&gt; BYTE#16#10  <br/>	AND arrInputAddress[1] &lt;&gt; BYTE#16#50 <br/>	THEN<br/>
+									<br/>(* ==================================== Clear xSending flag if command is changing ============================== *)<br/>IF arrInputAddress[0] &lt;&gt; BYTE#16#10  <br/>	AND arrInputAddress[0] &lt;&gt; BYTE#16#50 <br/>	THEN<br/>
 									<br/>		xSending	:= FALSE;<br/>
 									<br/>END_IF;<br/>
 									<br/>R_TRIG_xSending.CLK	:= xSending;<br/>R_TRIG_xSending();<br/>(* ============================================================================================================== *)<br/>
@@ -238,7 +243,7 @@
 				</body>
 				<documentation>
 					<html xmlns="http://www.w3.org/1999/xhtml">
-						<div xml:space="preserve" id="MWTDESCRIPTION" wsName="IL_UNI07T" xmlns="http://www.w3.org/1999/xhtml"/>
+						<div xml:space="preserve" id="MWTDESCRIPTION" wsName="AXL_F_RSUNIT" xmlns="http://www.w3.org/1999/xhtml"/>
 					</html>
 				</documentation>
 			</pou>

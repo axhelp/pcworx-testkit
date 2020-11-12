@@ -100,4 +100,9 @@ Default value is FALSE.
 %MB1.300;STRING;STD_CNF STD_RES PLC_CFG_NAME;Configuration Name in PC WORX
 %MB1.400;STRING;STD_CNF STD_RES PLC_RES_NAME;Resource Name in PC WORX
 %MD1.3072;UDINT;STD_CNF STD_RES DC_AMOUNT;Amount of successfull Download Changes on the current project.
+;udtRS485Frame;STD_CNF STD_RES udtRS485LineAXL;
+;MB2_AXL_RSUNI2_ARR_B_0_19;STD_CNF STD_RES arrInputAddressMaster;
+;MB2_AXL_RSUNI2_ARR_B_0_19;STD_CNF STD_RES arrOutputAddressMaster;
+;MB2_AXL_RSUNI2_ARR_B_0_19;STD_CNF STD_RES arrInputAddressSlave;
+;MB2_AXL_RSUNI2_ARR_B_0_19;STD_CNF STD_RES arrOutputAddressSlave;
 ;udtConsole;STD_CNF STD_RES udtConsole;

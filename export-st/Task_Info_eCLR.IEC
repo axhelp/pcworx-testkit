@@ -1,0 +1,41 @@
+(*@PROPERTIES_EX@
+TYPE: DATA_TYPE
+LOCALE: 0
+*)
+TYPE
+	Task_Name_eCLR : ARRAY[0..35] OF BYTE;
+
+	Task_Info_eCLR : STRUCT
+		TaskStack       : INT;            (* Stack size of the task *)
+		TaskPrio        : INT;            (* Priority of the task *)
+		TaskPeriod_us   : DINT;           (* Period of the task in microseconds *)
+		TaskWatchdog_us : DINT;           (* Watchdog time in microseconds *)
+		TaskPeriod      : INT;            (* Period of the task in milliseconds *)
+		TaskWatchdog    : INT;            (* Watchdog time in milliseconds *)
+		MinDuration_us  : DINT;           (* Minimum task duration in microseconds including preemption *)
+		MaxDuration_us  : DINT;           (* Maximum task duration in microseconds including preemption *)
+		CurDuration_us  : DINT;           (* Current task duration in microseconds including preemption *)
+		MinDelay_us     : DINT;           (* Minimum task delay in microseconds including preemption *)
+		MaxDelay_us     : DINT;           (* Maximum task delay in microseconds including preemption *)
+		CurDelay_us     : DINT;           (* Current task delay in microseconds including preemption *)
+		MinDuration     : INT;            (* Minimum task duration in milliseconds including preemption *)
+		MaxDuration     : INT;            (* Maximum task duration in milliseconds including preemption *)
+		CurDuration     : INT;            (* Current task duration in milliseconds including preemption *)
+		MinDelay        : INT;            (* Minimum task delay in milliseconds including preemption *)
+		MaxDelay        : INT;            (* Maximum task delay in milliseconds including preemption *)
+		CurDelay        : INT;            (* Current task delay in milliseconds including preemption *)
+		unused_1        : DINT;
+		unused_2        : DINT;
+		unused_3        : DINT;
+		unused_4        : DINT;
+		unused_5        : DINT;
+		unused_6        : DINT;
+		unused_7        : DINT;
+		unused_8        : DINT;
+		unused_9        : DINT;
+		TNameMaxSize    : INT;
+		TNameSize       : INT;
+		TaskName        : Task_Name_eCLR;
+	END_STRUCT;
+END_TYPE
+

@@ -1,0 +1,76 @@
+<project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-11-12T14:06:24" contentDescription="###XMLINFO=2;1;"/>
+	<contentHeader name="pcworx-testkit" version="1605179184" modificationDateTime="2020-11-12T14:06:24" connectionCheck="true">
+		<coordinateInfo>
+			<pageSize x="999" y="9999"/>
+			<fbd>
+				<scaling x="2" y="2"/>
+			</fbd>
+			<ld>
+				<scaling x="2" y="2"/>
+			</ld>
+			<sfc>
+				<scaling x="2" y="2"/>
+			</sfc>
+		</coordinateInfo>
+	</contentHeader>
+	<types>
+		<dataTypes/>
+		<pous>
+			<pou name="MAS_MOCK_AXL_F_RS_UNI" pouType="program" pouGroup="Examples" lastChange="2020-11-12T14:06:23">
+				<interface>
+					<localVars retain="false">
+						<variable name="AXL_F_RSUNI_Mock_Master" group="Mock">
+							<type>
+								<derived name="AXL_F_RSUNI"/>
+							</type>
+						</variable>
+						<variable name="xDebug" group="Mock">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+					</localVars>
+					<externalVars retain="false">
+						<variable name="udtRS485LineAXL" group="Global">
+							<type>
+								<derived name="udtRS485Frame"/>
+							</type>
+						</variable>
+						<variable name="arrInputAddressMaster" group="Global">
+							<type>
+								<derived name="MB2_AXL_RSUNI2_ARR_B_0_19"/>
+							</type>
+						</variable>
+						<variable name="arrOutputAddressMaster" group="Global">
+							<type>
+								<derived name="MB2_AXL_RSUNI2_ARR_B_0_19"/>
+							</type>
+						</variable>
+					</externalVars>
+				</interface>
+				<body>
+					<ST>
+						<worksheet name="Master">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">(*	AXL F RS UNI software replacement *)<br/>AXL_F_RSUNI_Mock_Master.xConsoleLog		:= xDebug;<br/>AXL_F_RSUNI_Mock_Master.strConsoleId	:= 'MAS';<br/>AXL_F_RSUNI_Mock_Master.udtRS485Line	:= udtRS485LineAXL;<br/>AXL_F_RSUNI_Mock_Master.arrInputAddress	:= arrOutputAddressMaster;<br/>AXL_F_RSUNI_Mock_Master.arrOutputAddress:= arrInputAddressMaster;<br/>
+									<br/>AXL_F_RSUNI_Mock_Master();<br/>
+									<br/>
+									<br/>udtRS485LineAXL							:= AXL_F_RSUNI_Mock_Master.udtRS485Line;<br/>arrOutputAddressMaster					:= AXL_F_RSUNI_Mock_Master.arrInputAddress;<br/>arrInputAddressMaster					:= AXL_F_RSUNI_Mock_Master.arrOutputAddress;<br/>
+								</p>
+							</html>
+						</worksheet>
+					</ST>
+				</body>
+				<documentation>
+					<html xmlns="http://www.w3.org/1999/xhtml">
+						<div xml:space="preserve" id="MWTDESCRIPTION" wsName="MAS_MOCK_AXL_F_RS_UNIT" xmlns="http://www.w3.org/1999/xhtml"/>
+					</html>
+				</documentation>
+			</pou>
+		</pous>
+	</types>
+	<instances>
+		<configurations/>
+	</instances>
+</project>

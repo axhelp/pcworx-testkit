@@ -1,0 +1,9 @@
+(*@PROPERTIES_EX@
+TYPE: DATA_TYPE
+LOCALE: 0
+*)
+
+TYPE
+	ensure_compiled : ARRAY[0..1] OF BOOL;
+END_TYPE
+

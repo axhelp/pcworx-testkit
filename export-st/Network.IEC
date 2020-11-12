@@ -1,0 +1,15 @@
+(*@PROPERTIES_EX@
+TYPE: DATA_TYPE
+LOCALE: 0
+*)
+TYPE
+    ARR_B_0_4095    : ARRAY [0..4095] OF BYTE;
+
+	udtRS485Frame	:
+	STRUCT
+		iCounter	:	INT;
+		iWordsNo	:	INT;
+		arrData		:	ARR_B_0_4095;
+	END_STRUCT;
+END_TYPE
+

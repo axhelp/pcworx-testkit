@@ -1,0 +1,188 @@
+<project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-11-12T14:06:24" contentDescription="###XMLINFO=2;1;"/>
+	<contentHeader name="pcworx-testkit" version="1605179690" modificationDateTime="2020-11-12T14:14:50" connectionCheck="true">
+		<coordinateInfo>
+			<pageSize x="999" y="9999"/>
+			<fbd>
+				<scaling x="2" y="2"/>
+			</fbd>
+			<ld>
+				<scaling x="2" y="2"/>
+			</ld>
+			<sfc>
+				<scaling x="2" y="2"/>
+			</sfc>
+		</coordinateInfo>
+	</contentHeader>
+	<types>
+		<dataTypes/>
+		<pous>
+			<pou name="MAS_AXL_F_RS_UNI" pouType="program" pouGroup="Examples" lastChange="2020-11-12T14:14:50">
+				<interface>
+					<localVars retain="false">
+						<variable name="AXL_F_RSUNI_Master" group="Master">
+							<type>
+								<derived name="MB_AXL_F_RSUNI_Master_2"/>
+							</type>
+						</variable>
+						<variable name="MB_RTU_FC3" group="Master">
+							<type>
+								<derived name="MB_RTU_FC3_7"/>
+							</type>
+						</variable>
+						<variable name="xActivateMaster" group="Master">
+							<type>
+								<BOOL/>
+							</type>
+							<initialValue>
+								<simpleValue value="TRUE"/>
+							</initialValue>
+						</variable>
+						<variable name="xResetMaster" group="Master">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="xSendRequest" group="Master">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="iDataCount" group="Master">
+							<type>
+								<INT/>
+							</type>
+							<initialValue>
+								<simpleValue value="1"/>
+							</initialValue>
+						</variable>
+						<variable name="uiSlaveAddress" group="Master">
+							<type>
+								<UINT/>
+							</type>
+							<initialValue>
+								<simpleValue value="UINT#1"/>
+							</initialValue>
+						</variable>
+						<variable name="uiStartAddress" group="Master">
+							<type>
+								<UINT/>
+							</type>
+							<initialValue>
+								<simpleValue value="UINT#1"/>
+							</initialValue>
+						</variable>
+						<variable name="xEnablePoll" group="Master">
+							<type>
+								<BOOL/>
+							</type>
+							<initialValue>
+								<simpleValue value="TRUE"/>
+							</initialValue>
+						</variable>
+						<variable name="arrReadData" group="Master">
+							<type>
+								<derived name="arrModbus2_W_1_125"/>
+							</type>
+						</variable>
+						<variable name="udtMbDataMaster" group="Master">
+							<type>
+								<derived name="udtModbus2_Data"/>
+							</type>
+						</variable>
+						<variable name="iRegisterValue01" group="Master">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="xDoneFC3" group="Master">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="xErrorFC3" group="Master">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="wDiagCodeFC3" group="Master">
+							<type>
+								<WORD/>
+							</type>
+						</variable>
+						<variable name="wAddDiagCodeFC3" group="Master">
+							<type>
+								<WORD/>
+							</type>
+						</variable>
+						<variable name="uiRequestsCounter" group="Master">
+							<type>
+								<UINT/>
+							</type>
+						</variable>
+						<variable name="uiResponsesCounter" group="Master">
+							<type>
+								<UINT/>
+							</type>
+						</variable>
+						<variable name="diDoneCounter" group="Master">
+							<type>
+								<DINT/>
+							</type>
+						</variable>
+						<variable name="diErrorCounter" group="Master">
+							<type>
+								<DINT/>
+							</type>
+						</variable>
+						<variable name="" group="Mock">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+					</localVars>
+					<externalVars retain="false">
+						<variable name="arrInputAddressMaster" group="Global">
+							<type>
+								<derived name="MB2_AXL_RSUNI2_ARR_B_0_19"/>
+							</type>
+						</variable>
+						<variable name="arrOutputAddressMaster" group="Global">
+							<type>
+								<derived name="MB2_AXL_RSUNI2_ARR_B_0_19"/>
+							</type>
+						</variable>
+					</externalVars>
+				</interface>
+				<body>
+					<ST>
+						<worksheet name="Master">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">(*<br/>MB_Master block sends data to <br/>mocked IB IL RS UNI function block instead of Process data<br/>*)<br/>
+									<br/>AXL_F_RSUNI_Master.xActivate			:= xActivateMaster;<br/>AXL_F_RSUNI_Master.tModbus_Timeout      := T#3s;<br/>AXL_F_RSUNI_Master.tPD_Timeout          := T#3s;<br/>AXL_F_RSUNI_Master.xReset				:= xResetMaster;<br/>AXL_F_RSUNI_Master.udtMBData			:= udtMbDataMaster;<br/>AXL_F_RSUNI_Master.arrInputPD           := arrInputAddressMaster;<br/>AXL_F_RSUNI_Master.arrOutputPD          := arrOutputAddressMaster;<br/>
+									<br/>AXL_F_RSUNI_Master();<br/>
+									<br/>udtMbDataMaster							:= AXL_F_RSUNI_Master.udtMBData;<br/>arrInputAddressMaster					:= AXL_F_RSUNI_Master.arrInputPD;<br/>arrOutputAddressMaster					:= AXL_F_RSUNI_Master.arrOutputPD;<br/>uiRequestsCounter                       := AXL_F_RSUNI_Master.uiRequestsCounter;<br/>uiResponsesCounter                      := AXL_F_RSUNI_Master.uiResponsesCounter;<br/>
+									<br/>(*	FC3 = Read multiple registers *)<br/>MB_RTU_FC3.xActivate					:= AXL_F_RSUNI_Master.xActive;<br/>MB_RTU_FC3.xSendRequest					:= xSendRequest;<br/>MB_RTU_FC3.xEnablePoll					:= xEnablePoll;<br/>MB_RTU_FC3.tPollInterval				:= t#200ms;<br/>MB_RTU_FC3.uiSlaveAddress				:= uiSlaveAddress;<br/>MB_RTU_FC3.uiStartAddress				:= uiStartAddress;<br/>MB_RTU_FC3.iDataCount					:= iDataCount;<br/>MB_RTU_FC3.arrReadData					:= arrReadData;<br/>MB_RTU_FC3.udtMbData					:= udtMbDataMaster;<br/>
+									<br/>MB_RTU_FC3();<br/>
+									<br/>xDoneFC3								:= MB_RTU_FC3.xDone;<br/>xErrorFC3								:= MB_RTU_FC3.xError;<br/>wDiagCodeFC3							:= MB_RTU_FC3.wDiagCode;<br/>wAddDiagCodeFC3							:= MB_RTU_FC3.wAddDiagCode;<br/>
+									<br/>arrReadData								:= MB_RTU_FC3.arrReadData;<br/>udtMbDataMaster							:= MB_RTU_FC3.udtMbData;<br/>
+									<br/>(*	Readed value *)<br/>iRegisterValue01						:= WORD_TO_INT(arrReadData[1]);<br/>
+									<br/>IF xDoneFC3 THEN<br/>    diDoneCounter                       := diDoneCounter + DINT#1;<br/>END_IF;<br/>
+									<br/>IF xErrorFC3 THEN<br/>    diErrorCounter                      := diErrorCounter + DINT#1;<br/>END_IF;<br/>
+								</p>
+							</html>
+						</worksheet>
+					</ST>
+				</body>
+				<documentation>
+					<html xmlns="http://www.w3.org/1999/xhtml">
+						<div xml:space="preserve" id="MWTDESCRIPTION" wsName="MAS_AXL_F_RS_UNIT" xmlns="http://www.w3.org/1999/xhtml"/>
+					</html>
+				</documentation>
+			</pou>
+		</pous>
+	</types>
+	<instances>
+		<configurations/>
+	</instances>
+</project>
