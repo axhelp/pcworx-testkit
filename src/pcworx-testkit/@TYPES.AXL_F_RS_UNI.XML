@@ -1,6 +1,6 @@
 <project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
 	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-11-12T12:46:14" contentDescription="###XMLINFO=2;1;"/>
-	<contentHeader name="pcworx-testkit" version="1605174743" modificationDateTime="2020-11-12T12:52:23" connectionCheck="true">
+	<contentHeader name="pcworx-testkit" version="1605267017" modificationDateTime="2020-11-13T14:30:17" connectionCheck="true">
 		<coordinateInfo>
 			<pageSize x="999" y="9999"/>
 			<fbd>
@@ -19,8 +19,8 @@
 			<datatypeWorksheet>
 				<html xmlns="http://www.w3.org/1999/xhtml">
 					<div xml:space="preserve" id="MWTDESCRIPTION" wsName="AXL_F_RS_UNI" xmlns="http://www.w3.org/1999/xhtml">TYPE<br/>
-						<br/>	ARR_B_0_19      : ARRAY [0..19] OF BYTE;<br/>
-						<br/>	udtAXL_F_RS_UNI_Buffer :<br/>	STRUCT<br/>		iWordsNo 	: INT;<br/>		arrData		: ARR_B_0_19;<br/>	END_STRUCT;<br/>END_TYPE<br/>
+						<br/>	ARR_B_0_19      : ARRAY [0..19] OF BYTE;        (* Process data channel *)<br/>
+						<br/>	udtAXL_F_RS_UNI_Buffer :                        (* Buffer *)<br/>	STRUCT<br/>        iLength     : INT;<br/>        xEmpty      : BOOL;<br/>        xFull       : BOOL;<br/>        udiRev      : UDINT;<br/>		arrData		: ARR_B_0_4095;<br/>	END_STRUCT;<br/>END_TYPE<br/>
 					</div>
 				</html>
 			</datatypeWorksheet>

@@ -1,0 +1,243 @@
+<project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-11-12T14:32:26" contentDescription="###XMLINFO=2;1;"/>
+	<contentHeader name="pcworx-testkit" version="1605184515" modificationDateTime="2020-11-12T15:35:15" connectionCheck="true">
+		<coordinateInfo>
+			<pageSize x="999" y="9999"/>
+			<fbd>
+				<scaling x="2" y="2"/>
+			</fbd>
+			<ld>
+				<scaling x="2" y="2"/>
+			</ld>
+			<sfc>
+				<scaling x="2" y="2"/>
+			</sfc>
+		</coordinateInfo>
+	</contentHeader>
+	<types>
+		<dataTypes/>
+		<pous>
+			<pou name="Buffer_Test" pouType="functionBlock" pouGroup="Serial" lastChange="2020-11-12T15:35:15">
+				<interface>
+					<inputVars retain="false">
+						<variable name="xPermission" group="Inputa">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+					</inputVars>
+					<localVars retain="false">
+						<variable name="strTestName" group="Internal">
+							<type>
+								<derived name="STRING_512"/>
+							</type>
+						</variable>
+						<variable name="strActualValue" group="Internal">
+							<type>
+								<derived name="STRING_512"/>
+							</type>
+						</variable>
+						<variable name="strExpectedValue" group="Internal">
+							<type>
+								<derived name="STRING_512"/>
+							</type>
+						</variable>
+						<variable name="xTestCaseExecuted" group="Internal">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="arrTests" group="Internal">
+							<type>
+								<derived name="arrTestItemsResults"/>
+							</type>
+						</variable>
+						<variable name="iTestIndex" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="iTestNextIndex" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="xInitFirst" group="Internal">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="xTestFailed" group="Internal">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="xAllBoilersUp" group="Internal">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="xAddBoilersDown" group="Internal">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="iBoilerNum" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="rIntegralRemembered" group="Internal">
+							<type>
+								<REAL/>
+							</type>
+						</variable>
+						<variable name="rMaxTempIntegral" group="Internal">
+							<type>
+								<REAL/>
+							</type>
+						</variable>
+						<variable name="rMinTempIntegral" group="Internal">
+							<type>
+								<REAL/>
+							</type>
+						</variable>
+					</localVars>
+					<outputVars retain="false">
+						<variable name="Result" group="Outputs">
+							<type>
+								<derived name="udtTestCaseResult"/>
+							</type>
+						</variable>
+					</outputVars>
+					<localVars retain="false">
+						<variable name="GetTestCaseResultInstance" group="Instances">
+							<type>
+								<derived name="GetTestCaseResult"/>
+							</type>
+						</variable>
+						<variable name="GetTestResultInstance" group="Instances">
+							<type>
+								<derived name="GetTestResult"/>
+							</type>
+						</variable>
+						<variable name="WaitTestResultInstance" group="Instances">
+							<type>
+								<derived name="WaitTestResult"/>
+							</type>
+						</variable>
+						<variable name="TK_BoolToStringInstance" group="Instances">
+							<type>
+								<derived name="TK_BoolToString"/>
+							</type>
+						</variable>
+						<variable name="TK_IntToStringInstance" group="Instances">
+							<type>
+								<derived name="TK_IntToString"/>
+							</type>
+						</variable>
+						<variable name="TK_RealToStringInstance" group="Instances">
+							<type>
+								<derived name="TK_RealToString"/>
+							</type>
+						</variable>
+						<variable name="BufferInstance" group="Instances">
+							<type>
+								<derived name="Buffer"/>
+							</type>
+						</variable>
+						<variable name="udtBuffer" group="Instances">
+							<type>
+								<derived name="udtAXL_F_RS_UNI_Buffer"/>
+							</type>
+						</variable>
+					</localVars>
+				</interface>
+				<body>
+					<ST>
+						<worksheet name="Init">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">(*==============================================================================================================================*)<br/>(*==============================================================================================================================*)<br/>
+									<br/>iTestIndex											:= -1;<br/>
+									<br/>(*==============================================================================================================================*)<br/>(*==============================================================================================================================*)<br/>
+									<br/>IF NOT Result.Summary.Result.xExecuted AND xPermission THEN<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>	IF NOT xInitFirst THEN<br/>		xInitFirst	:= TRUE;<br/>	END_IF;<br/>END_IF;<br/>
+								</p>
+							</html>
+						</worksheet>
+						<worksheet name="Test_Push">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">IF NOT Result.Summary.Result.xExecuted AND xPermission THEN<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>	strTestName										:= 'Should push to Buffer';<br/>	iTestIndex										:= iTestIndex + 1;<br/>	arrTests[iTestIndex].xEnabled					:= TRUE;<br/>	arrTests[iTestIndex].xPermission				:= TRUE;<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>	IF arrTests[iTestIndex].xEnabled AND NOT arrTests[iTestIndex].xExecuted AND arrTests[iTestIndex].xPermission THEN<br/>
+									<br/>        udtBuffer.arrData[0]                        := BYTE#1;<br/>        udtBuffer.arrData[1]                        := BYTE#2;<br/>        udtBuffer.arrData[2]                        := BYTE#0;<br/>        udtBuffer.iLength                           := 2;<br/>        BufferInstance.xPush                        := TRUE;<br/>        BufferInstance.xPull                        := FALSE;<br/>        BufferInstance.bPushByte                    := BYTE#99;<br/>        BufferInstance.udtBuffer                    := udtBuffer;<br/>        BufferInstance();<br/>        udtBuffer                                   := BufferInstance.udtBuffer;<br/>
+									<br/>        TK_IntToStringInstance.iValue               := BYTE_TO_INT(udtBuffer.arrData[2]);<br/>        TK_IntToStringInstance();<br/>        <br/>        TK_BoolToStringInstance.xValue              := FALSE;<br/>        TK_BoolToStringInstance();<br/>
+									<br/>        GetTestResultInstance.xEnabled              := TRUE;<br/>        GetTestResultInstance.strTestName           := strTestName;<br/>        GetTestResultInstance.strExpected           := '99';<br/>        GetTestResultInstance.strActual             := TK_IntToStringInstance.strOutput;<br/>        GetTestResultInstance.Result                := arrTests[iTestIndex];<br/>        GetTestResultInstance();<br/>
+									<br/>        arrTests[iTestIndex]						:= GetTestResultInstance.Result;<br/>
+									<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>		IF arrTests[iTestIndex].xExecuted THEN<br/>			(*	Permssion for next test	*)<br/>			iTestNextIndex								:= iTestIndex + 1;<br/>			arrTests[iTestNextIndex].xPermission		:= TRUE;<br/>
+									<br/>			(*	After every test *)<br/>
+									<br/>		END_IF;<br/>	ELSE <br/>		(*	Permssion for next test	*)<br/>		iTestNextIndex								:= iTestIndex + 1;<br/>		arrTests[iTestNextIndex].xPermission		:= arrTests[iTestIndex].xPermission;<br/>	END_IF;<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>END_IF;<br/>
+								</p>
+							</html>
+						</worksheet>
+						<worksheet name="Test_Push_Increment_Leng">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">IF NOT Result.Summary.Result.xExecuted AND xPermission THEN<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>	strTestName										:= '1.0.1 Should increment legth while push to Buffer';<br/>	iTestIndex										:= iTestIndex + 1;<br/>	arrTests[iTestIndex].xEnabled					:= TRUE;<br/>	arrTests[iTestIndex].xPermission				:= TRUE;<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>	IF arrTests[iTestIndex].xEnabled AND NOT arrTests[iTestIndex].xExecuted AND arrTests[iTestIndex].xPermission THEN<br/>
+									<br/>        udtBuffer.arrData[0]                        := BYTE#1;<br/>        udtBuffer.arrData[1]                        := BYTE#2;<br/>        udtBuffer.arrData[2]                        := BYTE#0;<br/>        udtBuffer.iLength                           := 2;<br/>        BufferInstance.xPush                        := TRUE;<br/>        BufferInstance.xPull                        := FALSE;<br/>        BufferInstance.bPushByte                    := BYTE#99;<br/>        BufferInstance.udtBuffer                    := udtBuffer;<br/>        BufferInstance();<br/>        udtBuffer                                   := BufferInstance.udtBuffer;<br/>
+									<br/>        TK_IntToStringInstance.iValue               := udtBuffer.iLength;<br/>        TK_IntToStringInstance();<br/>        <br/>        TK_BoolToStringInstance.xValue              := FALSE;<br/>        TK_BoolToStringInstance();<br/>
+									<br/>        GetTestResultInstance.xEnabled              := TRUE;<br/>        GetTestResultInstance.strTestName           := strTestName;<br/>        GetTestResultInstance.strExpected           := '3';<br/>        GetTestResultInstance.strActual             := TK_IntToStringInstance.strOutput;<br/>        GetTestResultInstance.Result                := arrTests[iTestIndex];<br/>        GetTestResultInstance();<br/>
+									<br/>        arrTests[iTestIndex]						:= GetTestResultInstance.Result;<br/>
+									<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>		IF arrTests[iTestIndex].xExecuted THEN<br/>			(*	Permssion for next test	*)<br/>			iTestNextIndex								:= iTestIndex + 1;<br/>			arrTests[iTestNextIndex].xPermission		:= TRUE;<br/>
+									<br/>			(*	After every test *)<br/>
+									<br/>		END_IF;<br/>	ELSE <br/>		(*	Permssion for next test	*)<br/>		iTestNextIndex								:= iTestIndex + 1;<br/>		arrTests[iTestNextIndex].xPermission		:= arrTests[iTestIndex].xPermission;<br/>	END_IF;<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>END_IF;<br/>
+								</p>
+							</html>
+						</worksheet>
+						<worksheet name="Test_Pull">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">IF NOT Result.Summary.Result.xExecuted AND xPermission THEN<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>	strTestName										:= 'Should pull from Buffer';<br/>	iTestIndex										:= iTestIndex + 1;<br/>	arrTests[iTestIndex].xEnabled					:= TRUE;<br/>	arrTests[iTestIndex].xPermission				:= TRUE;<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>	IF arrTests[iTestIndex].xEnabled AND NOT arrTests[iTestIndex].xExecuted AND arrTests[iTestIndex].xPermission THEN<br/>
+									<br/>        udtBuffer.arrData[0]                        := BYTE#99;<br/>        udtBuffer.arrData[1]                        := BYTE#2;<br/>        udtBuffer.arrData[2]                        := BYTE#0;<br/>        udtBuffer.iLength                           := 2;<br/>        BufferInstance.xPush                        := FALSE;<br/>        BufferInstance.xPull                        := TRUE;<br/>        BufferInstance.bPushByte                    := BYTE#99;<br/>        BufferInstance.udtBuffer                    := udtBuffer;<br/>        BufferInstance();<br/>        udtBuffer                                   := BufferInstance.udtBuffer;<br/>
+									<br/>        TK_IntToStringInstance.iValue               := BYTE_TO_INT(BufferInstance.bPulledByte);<br/>        TK_IntToStringInstance();<br/>        <br/>        TK_BoolToStringInstance.xValue              := FALSE;<br/>        TK_BoolToStringInstance();<br/>
+									<br/>        GetTestResultInstance.xEnabled              := TRUE;<br/>        GetTestResultInstance.strTestName           := strTestName;<br/>        GetTestResultInstance.strExpected           := '99';<br/>        GetTestResultInstance.strActual             := TK_IntToStringInstance.strOutput;<br/>        GetTestResultInstance.Result                := arrTests[iTestIndex];<br/>        GetTestResultInstance();<br/>
+									<br/>        arrTests[iTestIndex]						:= GetTestResultInstance.Result;<br/>
+									<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>		IF arrTests[iTestIndex].xExecuted THEN<br/>			(*	Permssion for next test	*)<br/>			iTestNextIndex								:= iTestIndex + 1;<br/>			arrTests[iTestNextIndex].xPermission		:= TRUE;<br/>
+									<br/>			(*	After every test *)<br/>
+									<br/>		END_IF;<br/>	ELSE <br/>		(*	Permssion for next test	*)<br/>		iTestNextIndex								:= iTestIndex + 1;<br/>		arrTests[iTestNextIndex].xPermission		:= arrTests[iTestIndex].xPermission;<br/>	END_IF;<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>END_IF;<br/>
+								</p>
+							</html>
+						</worksheet>
+						<worksheet name="Test_Pull_Decrement_Leng">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">IF NOT Result.Summary.Result.xExecuted AND xPermission THEN<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>	strTestName										:= 'Should decrement length while pull from Buffer';<br/>	iTestIndex										:= iTestIndex + 1;<br/>	arrTests[iTestIndex].xEnabled					:= TRUE;<br/>	arrTests[iTestIndex].xPermission				:= TRUE;<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>	IF arrTests[iTestIndex].xEnabled AND NOT arrTests[iTestIndex].xExecuted AND arrTests[iTestIndex].xPermission THEN<br/>
+									<br/>        udtBuffer.arrData[0]                        := BYTE#99;<br/>        udtBuffer.arrData[1]                        := BYTE#2;<br/>        udtBuffer.arrData[2]                        := BYTE#0;<br/>        udtBuffer.iLength                           := 2;<br/>        BufferInstance.xPush                        := FALSE;<br/>        BufferInstance.xPull                        := TRUE;<br/>        BufferInstance.bPushByte                    := BYTE#99;<br/>        BufferInstance.udtBuffer                    := udtBuffer;<br/>        BufferInstance();<br/>        udtBuffer                                   := BufferInstance.udtBuffer;<br/>
+									<br/>        TK_IntToStringInstance.iValue               := BYTE_TO_INT(BufferInstance.bPulledByte);<br/>        TK_IntToStringInstance();<br/>        <br/>        TK_BoolToStringInstance.xValue              := FALSE;<br/>        TK_BoolToStringInstance();<br/>
+									<br/>        GetTestResultInstance.xEnabled              := TRUE;<br/>        GetTestResultInstance.strTestName           := strTestName;<br/>        GetTestResultInstance.strExpected           := '99';<br/>        GetTestResultInstance.strActual             := TK_IntToStringInstance.strOutput;<br/>        GetTestResultInstance.Result                := arrTests[iTestIndex];<br/>        GetTestResultInstance();<br/>
+									<br/>        arrTests[iTestIndex]						:= GetTestResultInstance.Result;<br/>
+									<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>		IF arrTests[iTestIndex].xExecuted THEN<br/>			(*	Permssion for next test	*)<br/>			iTestNextIndex								:= iTestIndex + 1;<br/>			arrTests[iTestNextIndex].xPermission		:= TRUE;<br/>
+									<br/>			(*	After every test *)<br/>
+									<br/>		END_IF;<br/>	ELSE <br/>		(*	Permssion for next test	*)<br/>		iTestNextIndex								:= iTestIndex + 1;<br/>		arrTests[iTestNextIndex].xPermission		:= arrTests[iTestIndex].xPermission;<br/>	END_IF;<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>END_IF;<br/>
+								</p>
+							</html>
+						</worksheet>
+						<worksheet name="Results">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">IF NOT Result.Summary.Result.xExecuted AND xPermission THEN<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>	GetTestCaseResultInstance.Tests					:= arrTests;<br/>	GetTestCaseResultInstance();<br/>	Result											:= GetTestCaseResultInstance.Result;<br/>	(*==========================================================================================================================*)<br/>	(*==========================================================================================================================*)<br/>END_IF;<br/>
+								</p>
+							</html>
+						</worksheet>
+						<worksheet name="Buffer_Test">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml"/>
+							</html>
+						</worksheet>
+					</ST>
+				</body>
+				<documentation>
+					<html xmlns="http://www.w3.org/1999/xhtml">
+						<div xml:space="preserve" id="MWTDESCRIPTION" wsName="Buffer_TestT" xmlns="http://www.w3.org/1999/xhtml"/>
+					</html>
+				</documentation>
+			</pou>
+		</pous>
+	</types>
+	<instances>
+		<configurations/>
+	</instances>
+</project>

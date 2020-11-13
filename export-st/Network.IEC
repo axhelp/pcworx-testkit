@@ -8,7 +8,6 @@ TYPE
 	udtRS485Frame	:
 	STRUCT
 		iCounter	:	INT;
-		iWordsNo	:	INT;
 		arrData		:	ARR_B_0_4095;
 	END_STRUCT;
 END_TYPE

@@ -1,0 +1,145 @@
+<project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-11-12T14:27:16" contentDescription="###XMLINFO=2;1;"/>
+	<contentHeader name="pcworx-testkit" version="1605267249" modificationDateTime="2020-11-13T14:34:09" connectionCheck="true">
+		<coordinateInfo>
+			<pageSize x="999" y="9999"/>
+			<fbd>
+				<scaling x="2" y="2"/>
+			</fbd>
+			<ld>
+				<scaling x="2" y="2"/>
+			</ld>
+			<sfc>
+				<scaling x="2" y="2"/>
+			</sfc>
+		</coordinateInfo>
+	</contentHeader>
+	<types>
+		<dataTypes/>
+		<pous>
+			<pou name="Buffer" pouType="functionBlock" pouGroup="Serial" lastChange="2020-11-13T14:34:09">
+				<interface>
+					<inputVars retain="false">
+						<variable name="xPull" group="Inputs">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="xPush" group="Inputs">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="xClear" group="Inputs">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="bPushByte" group="Inputs">
+							<type>
+								<BYTE/>
+							</type>
+						</variable>
+					</inputVars>
+					<inOutVars retain="false">
+						<variable name="udtBuffer" group="Inouts">
+							<type>
+								<derived name="udtAXL_F_RS_UNI_Buffer"/>
+							</type>
+						</variable>
+					</inOutVars>
+					<localVars retain="false">
+						<variable name="MAX_LENGTH" group="Inouts">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+					</localVars>
+					<outputVars retain="false">
+						<variable name="xError" group="Inouts">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="xDone" group="Inouts">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+					</outputVars>
+					<localVars retain="false">
+						<variable name="iNextIndex" group="Inouts">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+					</localVars>
+					<outputVars retain="false">
+						<variable name="xEmpty" group="Inouts">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="xFull" group="Inouts">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+					</outputVars>
+					<localVars retain="false">
+						<variable name="iPulledIndex" group="Inouts">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+						<variable name="iIndex" group="Inouts">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+					</localVars>
+					<outputVars retain="false">
+						<variable name="bPulledByte" group="Outputs">
+							<type>
+								<BYTE/>
+							</type>
+						</variable>
+					</outputVars>
+					<localVars retain="false">
+						<variable name="" group="Internal">
+							<type>
+								<INT/>
+							</type>
+						</variable>
+					</localVars>
+				</interface>
+				<body>
+					<ST>
+						<worksheet name="Buffer">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">MAX_LENGTH                              := 4096;<br/>xError                                  := FALSE;<br/>xDone                                   := FALSE;<br/>
+									<br/>(* Push to buffer *)<br/>IF xPush THEN<br/>
+									<br/>    iNextIndex                          := udtBuffer.iLength;<br/>    IF iNextIndex &gt;= MAX_LENGTH THEN<br/>        xError                          := TRUE;<br/>    ELSE<br/>        udtBuffer.arrData[iNextIndex]   := bPushByte;<br/>        udtBuffer.iLength               := udtBuffer.iLength + 1;<br/>        xDone                           := TRUE;<br/>    END_IF;<br/>
+									<br/>ELSIF xPull THEN<br/>    IF udtBuffer.iLength &lt;= 0 THEN<br/>        xError                          := TRUE;<br/>    ELSE<br/>        bPulledByte                     := udtBuffer.arrData[0];<br/>
+									<br/>        FOR iIndex := 0 TO udtBuffer.iLength - 1 DO<br/>            iNextIndex                  := iIndex + 1;<br/>            udtBuffer.arrData[iIndex]   := udtBuffer.arrData[iNextIndex];<br/>        END_FOR;<br/>
+									<br/>        udtBuffer.iLength               := udtBuffer.iLength - 1;<br/>        xDone                           := TRUE;<br/>    END_IF;<br/>
+									<br/>ELSIF xClear THEN<br/>    FOR iIndex := 0 TO udtBuffer.iLength - 1 DO<br/>        iNextIndex                      := iIndex + 1;<br/>        udtBuffer.arrData[iIndex]       := BYTE#0;<br/>    END_FOR;<br/>    udtBuffer.iLength                   := 0;<br/>END_IF;<br/>
+									<br/>xEmpty                  := udtBuffer.iLength &lt;= 0;<br/>xFull                   := udtBuffer.iLength = MAX_LENGTH;<br/>
+									<br/>udtBuffer.xEmpty        := xEmpty;<br/>udtBuffer.xFull         := xFull;<br/>
+								</p>
+							</html>
+						</worksheet>
+					</ST>
+				</body>
+				<documentation>
+					<html xmlns="http://www.w3.org/1999/xhtml">
+						<div xml:space="preserve" id="MWTDESCRIPTION" wsName="BufferT" xmlns="http://www.w3.org/1999/xhtml"/>
+					</html>
+				</documentation>
+			</pou>
+		</pous>
+	</types>
+	<instances>
+		<configurations/>
+	</instances>
+</project>

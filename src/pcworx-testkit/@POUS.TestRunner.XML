@@ -1,0 +1,77 @@
+<project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.kw-software.com/xml/PLCopen/TC6_XML_V10_KW.xsd">
+	<fileHeader companyName="Phoenix Contact" companyURL="https://www.phoenixcontact-software.com" productName="PC WORX" productVersion="6.30" productRelease="Build 665" creationDateTime="2020-11-12T14:31:49" contentDescription="###XMLINFO=2;1;"/>
+	<contentHeader name="pcworx-testkit" version="1605181536" modificationDateTime="2020-11-12T14:45:36" connectionCheck="true">
+		<coordinateInfo>
+			<pageSize x="999" y="9999"/>
+			<fbd>
+				<scaling x="2" y="2"/>
+			</fbd>
+			<ld>
+				<scaling x="2" y="2"/>
+			</ld>
+			<sfc>
+				<scaling x="2" y="2"/>
+			</sfc>
+		</coordinateInfo>
+	</contentHeader>
+	<types>
+		<dataTypes/>
+		<pous>
+			<pou name="TestRunner" pouType="program" pouGroup="Tests" lastChange="2020-11-12T14:45:36">
+				<interface>
+					<localVars retain="false">
+						<variable name="Buffer_Test" group="Default">
+							<type>
+								<derived name="Buffer_Test"/>
+							</type>
+						</variable>
+						<variable name="xAllTestsExecuted" group="Default">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="xAnyTestFailed" group="Default">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="xNextTestPermssion" group="Default">
+							<type>
+								<BOOL/>
+							</type>
+						</variable>
+						<variable name="BufferTestResult" group="Default">
+							<type>
+								<derived name="udtTestCaseResult"/>
+							</type>
+						</variable>
+					</localVars>
+				</interface>
+				<body>
+					<ST>
+						<worksheet name="TestRunner">
+							<html xmlns="http://www.w3.org/1999/xhtml">
+								<p xml:space="preserve" xmlns="http://www.w3.org/1999/xhtml">(*	Test case instances *)<br/>xNextTestPermssion							:= TRUE;<br/>
+									<br/>Buffer_Test.xPermission                     := xNextTestPermssion;<br/>Buffer_Test();<br/>BufferTestResult                            := Buffer_Test.Result;<br/>xNextTestPermssion							:= BufferTestResult.Summary.Result.xExecuted;<br/>
+									<br/>
+									<br/>(*	Executed *)<br/>xAllTestsExecuted							:= 	(<br/>													BufferTestResult.Summary.Result.xExecuted<br/>												);<br/>
+									<br/>(*	Faled *)<br/>xAnyTestFailed								:= 	(<br/>													BufferTestResult.Summary.Result.xFailed<br/>												);<br/>
+									<br/>
+									<br/>(*	Messages	*)<br/>BufferTestResult.Summary.Result.strMessage	:= 	(<br/>													BufferTestResult.Summary.Result.strMessage<br/>												);<br/>
+								</p>
+							</html>
+						</worksheet>
+					</ST>
+				</body>
+				<documentation>
+					<html xmlns="http://www.w3.org/1999/xhtml">
+						<div xml:space="preserve" id="MWTDESCRIPTION" wsName="TestRunnerT" xmlns="http://www.w3.org/1999/xhtml"/>
+					</html>
+				</documentation>
+			</pou>
+		</pous>
+	</types>
+	<instances>
+		<configurations/>
+	</instances>
+</project>

@@ -4,12 +4,15 @@ LOCALE: 0
 *)
 TYPE
 
-	ARR_B_0_19      : ARRAY [0..19] OF BYTE;
+	ARR_B_0_19      : ARRAY [0..19] OF BYTE;        (* Process data channel *)
 
-	udtAXL_F_RS_UNI_Buffer :
+	udtAXL_F_RS_UNI_Buffer :                        (* Buffer *)
 	STRUCT
-		iWordsNo 	: INT;
-		arrData		: ARR_B_0_19;
+        iLength     : INT;
+        xEmpty      : BOOL;
+        xFull       : BOOL;
+        udiRev      : UDINT;
+		arrData		: ARR_B_0_4095;
 	END_STRUCT;
 END_TYPE
 

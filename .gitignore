@@ -6,3 +6,4 @@ bin/libraries/pcworx_testkit_1/
 bin/pcworx-testkit/
 bin/libraries/Modbus_RTU_*/Modbus_RTU_*/
 bin/pcworx-testkit_2/
+bin/examples/exa-pcworx-testkit
